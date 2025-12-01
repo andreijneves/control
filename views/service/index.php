@@ -17,7 +17,10 @@ $this->title = 'Serviços';
         'columns' => [
             'name',
             'duration_min:integer',
-            'price:currency',
+            [
+                'attribute' => 'price',
+                'format' => ['decimal', 2],
+            ],
             [
                 'class' => 'yii\\grid\\ActionColumn',
             ],

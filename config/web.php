@@ -25,6 +25,13 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => ['site/login'],
         ],
+        'adminUser' => [
+            'class' => 'yii\\web\\User',
+            'identityClass' => 'app\\models\\SystemAdmin',
+            'enableAutoLogin' => true,
+            'loginUrl' => ['admin-auth/login'],
+            'identityCookie' => ['name' => '_identity_admin', 'httpOnly' => true],
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -48,8 +55,12 @@ $config = [
             'enablePrettyUrl' => false,
             'showScriptName' => false,
             'rules' => [
-                '' => 'dashboard/index',
+                '' => 'site/index',
                 'signup' => 'auth/register',
+                'barbearia/<id:\\d+>' => 'public/barbershop',
+                'admin' => 'admin/dashboard',
+                'admin/login' => 'admin-auth/login',
+                'admin/logout' => 'admin-auth/logout',
             ],
         ],
     ],
