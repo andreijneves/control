@@ -45,7 +45,18 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         $items[] = ['label' => 'Dashboard', 'url' => ['/dashboard/index']];
         $items[] = ['label' => 'Funcionários', 'url' => ['/employee/index']];
         $items[] = ['label' => 'Serviços', 'url' => ['/service/index']];
+        $items[] = ['label' => 'Agendamentos', 'url' => ['/appointment/index']];
         $items[] = ['label' => 'Usuários', 'url' => ['/account/index']];
+        $barbershopId = Yii::$app->user->identity->barbershop_id ?? null;
+        $slug = null;
+        if ($barbershopId) {
+            $bs = \app\models\Barbershop::findOne($barbershopId);
+            if ($bs && $bs->slug) { $slug = $bs->slug; }
+        }
+        if ($barbershopId || $slug) {
+            $url = $slug ? ['/public/barbershop', 'slug' => $slug] : ['/public/barbershop', 'id' => $barbershopId];
+            $items[] = ['label' => 'Página Pública', 'url' => $url, 'linkOptions' => ['target' => '_blank']];
+        }
         $items[] = '<li class="nav-item">'
             . Html::beginForm(['/site/logout'])
             . Html::submitButton(

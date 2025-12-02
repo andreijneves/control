@@ -20,6 +20,15 @@ $this->title = 'Funcionários';
             'phone',
             [
                 'class' => 'yii\\grid\\ActionColumn',
+                'template' => '{schedule} {update} {delete}',
+                'buttons' => [
+                    'schedule' => function ($url, $model) {
+                        return Html::a('<i class="bi bi-calendar-week"></i>', ['schedule', 'id' => $model->id], [
+                            'class' => 'btn btn-sm btn-info',
+                            'title' => 'Horários',
+                        ]);
+                    },
+                ],
             ],
         ],
     ]) ?>

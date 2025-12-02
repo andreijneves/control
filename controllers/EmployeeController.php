@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use app\models\Employee;
+use app\models\EmployeeSchedule;
 
 class EmployeeController extends Controller
 {
@@ -61,6 +62,38 @@ class EmployeeController extends Controller
         $model = $this->findModel($id);
         $model->delete();
         return $this->redirect(['index']);
+    }
+
+    public function actionSchedule($id)
+    {
+        $employee = $this->findModel($id);
+        $dataProvider = new ActiveDataProvider([
+            'query' => EmployeeSchedule::find()->where(['employee_id' => $employee->id]),
+            'pagination' => false,
+            'sort' => ['defaultOrder' => ['day_of_week' => SORT_ASC, 'start_time' => SORT_ASC]],
+        ]);
+        return $this->render('schedule', compact('employee', 'dataProvider'));
+    }
+
+    public function actionAddSchedule($id)
+    {
+        $employee = $this->findModel($id);
+        $model = new EmployeeSchedule();
+        $model->employee_id = $employee->id;
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['schedule', 'id' => $employee->id]);
+        }
+        return $this->render('add-schedule', compact('employee', 'model'));
+    }
+
+    public function actionDeleteSchedule($id, $scheduleId)
+    {
+        $employee = $this->findModel($id);
+        $schedule = EmployeeSchedule::findOne(['id' => $scheduleId, 'employee_id' => $employee->id]);
+        if ($schedule) {
+            $schedule->delete();
+        }
+        return $this->redirect(['schedule', 'id' => $employee->id]);
     }
 
     protected function findModel($id)

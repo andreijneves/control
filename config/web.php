@@ -31,6 +31,7 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => ['admin-auth/login'],
             'identityCookie' => ['name' => '_identity_admin', 'httpOnly' => true],
+            'idParam' => '__adminId',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

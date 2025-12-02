@@ -16,6 +16,7 @@ $this->title = 'Nova Barbearia';
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'readonly' => true, 'placeholder' => 'gerado automaticamente a partir do nome']) ?>
 
     <div class="form-group mt-3">
         <?= Html::submitButton('Salvar', ['class' => 'btn btn-success']) ?>
