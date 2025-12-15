@@ -1,0 +1,108 @@
+<?php
+
+/** @var yii\web\View $this */
+/** @var string $content */
+
+use app\assets\AppAsset;
+use app\widgets\Alert;
+use yii\bootstrap5\Breadcrumbs;
+use yii\bootstrap5\Html;
+use yii\bootstrap5\Nav;
+use yii\bootstrap5\NavBar;
+
+AppAsset::register($this);
+
+$this->registerCsrfMetaTags();
+$this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
+$this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
+$this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
+$this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+?>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>" class="h-100">
+<head>
+    <title><?= Html::encode($this->title) ?></title>
+    <?php $this->head() ?>
+</head>
+<body class="d-flex flex-column h-100">
+<?php $this->beginBody() ?>
+
+<header id="header">
+    <?php
+    NavBar::begin([
+        'brandLabel' => Yii::$app->name,
+        'brandUrl' => Yii::$app->homeUrl,
+        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+    ]);
+    $menuItems = [];
+
+    if (!Yii::$app->user->isGuest) {
+        $user = Yii::$app->user->identity;
+
+        // Admin geral vê início e itens informativos, e gerencia organizações
+        if ($user->isAdmGeral()) {
+            $menuItems[] = ['label' => 'Inicio', 'url' => ['/site/index']];
+            $menuItems[] = ['label' => 'Sobre', 'url' => ['/site/about']];
+            $menuItems[] = ['label' => 'Contato', 'url' => ['/site/contact']];
+            $menuItems[] = ['label' => 'Organizações', 'url' => ['/admin/organization/index']];
+        }
+
+        // Menus de Serviços, Cargos e Funcionários aparecem apenas para usuários vinculados a uma organização
+        if (($user->isAdmOrg() || $user->isFuncionario()) && $user->organization_id) {
+            $menuItems[] = ['label' => 'Serviços', 'url' => ['/organization/service/index']];
+            $menuItems[] = ['label' => 'Cargos', 'url' => ['/organization/position/index']];
+            $menuItems[] = ['label' => 'Funcionários', 'url' => ['/organization/employee/index']];
+        }
+    } else {
+        // Visitante vê início e itens informativos
+        $menuItems[] = ['label' => 'Inicio', 'url' => ['/site/index']];
+        $menuItems[] = ['label' => 'Sobre', 'url' => ['/site/about']];
+        $menuItems[] = ['label' => 'Contato', 'url' => ['/site/contact']];
+    }
+    
+    if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Entrar', 'url' => ['/auth/auth/login']];
+    } else {
+        $menuItems[] = '<li class="nav-item">'
+            . Html::beginForm(['/auth/auth/logout'])
+            . Html::submitButton(
+                'Sair (' . Yii::$app->user->identity->username . ')',
+                ['class' => 'nav-link btn btn-link logout']
+            )
+            . Html::endForm()
+            . '</li>';
+    }
+    
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav'],
+        'items' => $menuItems,
+    ]);
+    NavBar::end();
+    ?>
+</header>
+
+<main id="main" class="flex-shrink-0" role="main">
+    <div class="container">
+        <?php if (!empty($this->params['breadcrumbs'])): ?>
+            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+        <?php endif ?>
+        <?= Alert::widget() ?>
+        <?= $content ?>
+    </div>
+</main>
+
+<footer id="footer" class="mt-auto py-3 bg-light">
+    <div class="container">
+        <div class="row text-muted">
+            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
+            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+        </div>
+    </div>
+</footer>
+
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>
