@@ -36,48 +36,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'brandUrl' => Yii::$app->homeUrl,
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
-    $menuItems = [];
-
-    if (!Yii::$app->user->isGuest) {
-        $user = Yii::$app->user->identity;
-
-        // Admin geral vê início e itens informativos, e gerencia organizações
-        if ($user->isAdmGeral()) {
-            $menuItems[] = ['label' => 'Inicio', 'url' => ['/site/index']];
-            $menuItems[] = ['label' => 'Sobre', 'url' => ['/site/about']];
-            $menuItems[] = ['label' => 'Contato', 'url' => ['/site/contact']];
-            $menuItems[] = ['label' => 'Organizações', 'url' => ['/admin/organization/index']];
-        }
-
-        // Menus de Serviços, Cargos e Funcionários aparecem apenas para usuários vinculados a uma organização
-        if (($user->isAdmOrg() || $user->isFuncionario()) && $user->organization_id) {
-            $menuItems[] = ['label' => 'Serviços', 'url' => ['/organization/service/index']];
-            $menuItems[] = ['label' => 'Cargos', 'url' => ['/organization/position/index']];
-            $menuItems[] = ['label' => 'Funcionários', 'url' => ['/organization/employee/index']];
-        }
-    } else {
-        // Visitante vê início e itens informativos
-        $menuItems[] = ['label' => 'Inicio', 'url' => ['/site/index']];
-        $menuItems[] = ['label' => 'Sobre', 'url' => ['/site/about']];
-        $menuItems[] = ['label' => 'Contato', 'url' => ['/site/contact']];
-    }
-    
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Entrar', 'url' => ['/auth/auth/login']];
-    } else {
-        $menuItems[] = '<li class="nav-item">'
-            . Html::beginForm(['/auth/auth/logout'])
-            . Html::submitButton(
-                'Sair (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'nav-link btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
-        'items' => $menuItems,
+        'items' => [
+            ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'About', 'url' => ['/site/about']],
+            ['label' => 'Contact', 'url' => ['/site/contact']],
+            Yii::$app->user->isGuest
+                ? ['label' => 'Login', 'url' => ['/site/login']]
+                : '<li class="nav-item">'
+                    . Html::beginForm(['/site/logout'])
+                    . Html::submitButton(
+                        'Logout (' . Yii::$app->user->identity->username . ')',
+                        ['class' => 'nav-link btn btn-link logout']
+                    )
+                    . Html::endForm()
+                    . '</li>'
+        ]
     ]);
     NavBar::end();
     ?>

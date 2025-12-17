@@ -1,5 +1,4 @@
 <?php
-
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/test_db.php';
 
@@ -13,19 +12,7 @@ return [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'language' => 'pt-BR',
-    'sourceLanguage' => 'en-US',
-    'modules' => [
-        'auth' => [
-            'class' => \app\modules\auth\Module::class,
-        ],
-        'admin' => [
-            'class' => \app\modules\admin\Module::class,
-        ],
-        'organization' => [
-            'class' => \app\modules\organization\Module::class,
-        ],
-    ],
+    'language' => 'en-US',
     'components' => [
         'db' => $db,
         'mailer' => [
@@ -43,7 +30,6 @@ return [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
-            'loginUrl' => ['auth/auth/login'],
         ],
         'request' => [
             'cookieValidationKey' => 'test',

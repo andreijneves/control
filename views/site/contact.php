@@ -8,75 +8,38 @@ use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 use yii\captcha\Captcha;
 
-$this->title = 'Contato';
-
-$this->registerCss("
-.contact-section h1 {
-    color: #2d3748;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.contact-section p {
-    color: #4a5568;
-    font-size: 1.1rem;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.contact-form {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.form-control:focus {
-    border-color: #667eea;
-    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
-    padding: 0.8rem 2rem;
-    font-weight: 600;
-    border-radius: 25px;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-}
-");
+$this->title = 'Contact';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-contact contact-section">
+<div class="site-contact">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
 
         <div class="alert alert-success">
-            Obrigado por entrar em contato. Responderemos o mais breve possível.
+            Thank you for contacting us. We will respond to you as soon as possible.
         </div>
 
         <p>
-            Note que se você ativar o depurador do Yii, poderá visualizar
-            a mensagem de e-mail no painel de e-mail do depurador.
+            Note that if you turn on the Yii debugger, you should be able
+            to view the mail message on the mail panel of the debugger.
             <?php if (Yii::$app->mailer->useFileTransport): ?>
-                Como a aplicação está em modo de desenvolvimento, o e-mail não é enviado, mas salvo como
-                arquivo em <code><?= Yii::getAlias(Yii::$app->mailer->fileTransportPath) ?></code>.
-                Configure a propriedade <code>useFileTransport</code> do componente <code>mail</code>
-                da aplicação como false para habilitar o envio de e-mails.
+                Because the application is in development mode, the email is not sent but saved as
+                a file under <code><?= Yii::getAlias(Yii::$app->mailer->fileTransportPath) ?></code>.
+                Please configure the <code>useFileTransport</code> property of the <code>mail</code>
+                application component to be false to enable email sending.
             <?php endif; ?>
         </p>
 
     <?php else: ?>
 
         <p>
-            Tem dúvidas ou quer saber mais sobre nosso sistema? Preencha o formulário abaixo e entraremos em contato o mais breve possível.
+            If you have business inquiries or other questions, please fill out the following form to contact us.
+            Thank you.
         </p>
 
-        <div class="contact-form">
+        <div class="row">
+            <div class="col-lg-5">
 
                 <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
@@ -93,11 +56,12 @@ $this->registerCss("
                     ]) ?>
 
                     <div class="form-group">
-                        <?= Html::submitButton('Enviar', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                     </div>
 
                 <?php ActiveForm::end(); ?>
 
+            </div>
         </div>
 
     <?php endif; ?>

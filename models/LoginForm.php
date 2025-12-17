@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Model;
 
 /**
- * LoginForm é o modelo por trás do formulário de login.
+ * LoginForm is the model behind the login form.
  *
  * @property-read User|null $user
  *
@@ -21,33 +21,26 @@ class LoginForm extends Model
 
 
     /**
-     * @return array as regras de validação.
+     * @return array the validation rules.
      */
     public function rules()
     {
         return [
-            [['username'], 'required', 'message' => 'Informe o usuario.'],
-            [['password'], 'required', 'message' => 'Informe a senha.'],
+            // username and password are both required
+            [['username', 'password'], 'required'],
+            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
+            // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
 
-    public function attributeLabels()
-    {
-        return [
-            'username' => 'Usuário',
-            'password' => 'Senha',
-            'rememberMe' => 'Lembrar de mim',
-        ];
-    }
-
     /**
-     * Valida a senha.
-     * Este método serve como validação inline para senha.
+     * Validates the password.
+     * This method serves as the inline validation for password.
      *
-     * @param string $attribute o atributo sendo validado
-     * @param array $params os pares nome-valor adicionais da regra
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
      */
     public function validatePassword($attribute, $params)
     {
@@ -55,25 +48,25 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Usuario ou senha incorretos.');
+                $this->addError($attribute, 'Incorrect username or password.');
             }
         }
     }
 
     /**
-     * Faz o login de um usuário usando o nome de usuário e senha fornecidos.
-     * @return bool se o usuário foi autenticado com sucesso
+     * Logs in a user using the provided username and password.
+     * @return bool whether the user is logged in successfully
      */
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
         }
         return false;
     }
 
     /**
-     * Encontra usuário por [[username]]
+     * Finds user by [[username]]
      *
      * @return User|null
      */

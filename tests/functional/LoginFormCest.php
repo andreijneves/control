@@ -1,43 +1,40 @@
 <?php
 
-use app\models\User;
-
 class LoginFormCest
 {
     public function _before(\FunctionalTester $I)
     {
-        $this->ensureAdminUser();
-        $I->amOnRoute('auth/auth/login');
+        $I->amOnRoute('site/login');
     }
 
     public function openLoginPage(\FunctionalTester $I)
     {
-        $I->see('Entrar', 'h1');
+        $I->see('Login', 'h1');
+
     }
 
     // demonstrates `amLoggedInAs` method
     public function internalLoginById(\FunctionalTester $I)
     {
-        $user = $this->ensureAdminUser();
-        $I->amLoggedInAs($user->id);
+        $I->amLoggedInAs(100);
         $I->amOnPage('/');
-        $I->see('Sair (admin)');
+        $I->see('Logout (admin)');
     }
 
     // demonstrates `amLoggedInAs` method
     public function internalLoginByInstance(\FunctionalTester $I)
     {
-        $I->amLoggedInAs($this->ensureAdminUser());
+        $I->amLoggedInAs(\app\models\User::findByUsername('admin'));
         $I->amOnPage('/');
-        $I->see('Sair (admin)');
+        $I->see('Logout (admin)');
     }
 
     public function loginWithEmptyCredentials(\FunctionalTester $I)
     {
         $I->submitForm('#login-form', []);
         $I->expectTo('see validations errors');
-        $I->see('Informe o usuario.');
-        $I->see('Informe a senha.');
+        $I->see('Username cannot be blank.');
+        $I->see('Password cannot be blank.');
     }
 
     public function loginWithWrongCredentials(\FunctionalTester $I)
@@ -47,7 +44,7 @@ class LoginFormCest
             'LoginForm[password]' => 'wrong',
         ]);
         $I->expectTo('see validations errors');
-        $I->see('Usuario ou senha incorretos.');
+        $I->see('Incorrect username or password.');
     }
 
     public function loginSuccessfully(\FunctionalTester $I)
@@ -56,25 +53,7 @@ class LoginFormCest
             'LoginForm[username]' => 'admin',
             'LoginForm[password]' => 'admin',
         ]);
-        $I->see('Sair (admin)');
-        $I->dontSeeElement('form#login-form');
-    }
-
-    private function ensureAdminUser(): User
-    {
-        $user = User::findOne(['username' => 'admin']);
-        if ($user === null) {
-            $user = new User();
-            $user->id = 100;
-            $user->username = 'admin';
-            $user->setPassword('admin');
-            $user->generateAuthKey();
-            $user->generateAccessToken();
-            $user->role = User::ROLE_ADM_GERAL;
-            $user->status = 10;
-            $user->save(false);
-        }
-
-        return $user;
+        $I->see('Logout (admin)');
+        $I->dontSeeElement('form#login-form');              
     }
 }

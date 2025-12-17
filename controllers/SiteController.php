@@ -7,23 +7,11 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\Organization;
-use app\models\Employee;
-use app\models\Service;
 
 class SiteController extends Controller
 {
-    public function init()
-    {
-        parent::init();
-        
-        // Usa layout público para visitantes
-        if (Yii::$app->user->isGuest) {
-            $this->layout = 'public';
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -67,37 +55,17 @@ class SiteController extends Controller
     }
 
     /**
-     * Exibe a página inicial.
+     * Displays homepage.
      *
      * @return string
      */
     public function actionIndex()
     {
-        if (!Yii::$app->user->isGuest) {
-            $user = Yii::$app->user->identity;
-            
-            // Dashboard para Administrador Geral
-            if ($user->isAdmGeral()) {
-                return $this->render('admin-dashboard', [
-                    'totalOrganizations' => Organization::find()->count(),
-                    'totalEmployees' => Employee::find()->count(),
-                    'totalServices' => Service::find()->count(),
-                    'organizations' => Organization::find()->orderBy(['created_at' => SORT_DESC])->limit(10)->all(),
-                ]);
-            }
-            
-            // Dashboard para Administrador de Organização ou Funcionário
-            if (($user->isAdmOrg() || $user->isFuncionario()) && $user->organization_id) {
-                return $this->render('org-dashboard', [
-                    'organization' => $user->organization,
-                ]);
-            }
-        }
         return $this->render('index');
     }
 
     /**
-     * Ação de login.
+     * Login action.
      *
      * @return Response|string
      */
@@ -107,11 +75,19 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        return $this->redirect(['/auth/auth/login']);
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goBack();
+        }
+
+        $model->password = '';
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Ação de logout.
+     * Logout action.
      *
      * @return Response
      */
@@ -123,7 +99,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Exibe a página de contato.
+     * Displays contact page.
      *
      * @return Response|string
      */
@@ -141,40 +117,12 @@ class SiteController extends Controller
     }
 
     /**
-     * Exibe a página sobre.
+     * Displays about page.
      *
      * @return string
      */
     public function actionAbout()
     {
         return $this->render('about');
-    }
-
-    /**
-     * Cadastro de nova organização.
-     *
-     * @return Response|string
-     */
-    public function actionRegister()
-    {
-        $model = new Organization();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $credentials = $model->getAdminCredentials();
-            
-            Yii::$app->session->setFlash('success', 
-                "Organização cadastrada com sucesso!<br><br>" .
-                "<strong>Credenciais do Administrador:</strong><br>" .
-                "Usuário: <strong>{$credentials['username']}</strong><br>" .
-                "Senha: <strong>{$credentials['password']}</strong><br><br>" .
-                "<em>Guarde estas informações em local seguro!</em>"
-            );
-
-            return $this->redirect(['/auth/auth/login']);
-        }
-
-        return $this->render('register', [
-            'model' => $model,
-        ]);
     }
 }

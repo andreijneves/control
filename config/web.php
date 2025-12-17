@@ -4,31 +4,17 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'control',
-    'name' => 'Control',
+    'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'language' => 'pt-BR',
-    'sourceLanguage' => 'en-US',
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'modules' => [
-        'auth' => [
-            'class' => \app\modules\auth\Module::class,
-        ],
-        'admin' => [
-            'class' => \app\modules\admin\Module::class,
-        ],
-        'organization' => [
-            'class' => \app\modules\organization\Module::class,
-        ],
-    ],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'a0ysBB0XhfCmWxw8qZiXPy0RB4LL-Ki7',
+            'cookieValidationKey' => 'FGQaQFWbMid044GD0UI0dFie-LLHTozM',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -36,7 +22,6 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => ['auth/auth/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
