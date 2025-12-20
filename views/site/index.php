@@ -1,53 +1,48 @@
 <?php
 
-/** @var yii\web\View $this */
+use yii\bootstrap5\Html;
 
-$this->title = 'My Yii Application';
+$this->title = 'Control - Sistema de Agendamentos';
 ?>
-<div class="site-index">
 
-    <div class="jumbotron text-center bg-transparent mt-5 mb-5">
-        <h1 class="display-4">Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="https://www.yiiframework.com">Get started with Yii</a></p>
+<div class="jumbotron text-center bg-light p-5 rounded-lg m-5">
+    <h1 class="display-4">Bem-vindo ao Control</h1>
+    <p class="lead">Sistema moderno de agendamento de serviços</p>
+    <hr class="my-4">
+    <p>Gerencie sua empresa, serviços, funcionários e agendamentos em um único lugar.</p>
+    
+    <div class="mt-4">
+        <?= Html::a('🏢 Área Pública', ['/cliente/empresas'], ['class' => 'btn btn-success btn-lg me-2']) ?>
+        <?= Html::a('Cadastrar Empresa', ['/site/cadastro-empresa'], ['class' => 'btn btn-primary btn-lg me-2']) ?>
+        <?= Html::a('Fazer Login', ['/site/login'], ['class' => 'btn btn-secondary btn-lg']) ?>
     </div>
+</div>
 
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="https://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+<div class="row my-5">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Gerencie Serviços</h5>
+                <p class="card-text">Cadastre e organize todos os serviços da sua empresa.</p>
             </div>
         </div>
-
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Controle de Funcionários</h5>
+                <p class="card-text">Gerencie funcionários e seus horários disponíveis.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h5 class="card-title">Agendamentos Fáceis</h5>
+                <p class="card-text">Permita que clientes agendem serviços de forma simples.</p>
+            </div>
+        </div>
     </div>
 </div>

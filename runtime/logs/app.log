@@ -1,0 +1,419 @@
+2025-12-20 01:09:08 [-][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: Exception (Invalid Configuration) 'yii\base\InvalidConfigException' with message 'Unable to open debug data index file: /var/www/html/control/runtime/debug/index.data' 
+
+in /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php:141
+
+Stack trace:
+#0 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(80): yii\debug\LogTarget->updateIndexFile()
+#1 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(183): yii\debug\LogTarget->export()
+#2 /var/www/html/control/vendor/yiisoft/yii2/log/Dispatcher.php(194): yii\debug\LogTarget->collect()
+#3 /var/www/html/control/vendor/yiisoft/yii2/log/Logger.php(225): yii\log\Dispatcher->dispatch()
+#4 [internal function]: yii\log\Logger->flush()
+#5 {main}
+2025-12-20 01:08:58 [-][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'SHELL' => '/bin/bash'
+    'SESSION_MANAGER' => 'local/andrei:@/tmp/.ICE-unix/1314,unix/andrei:/tmp/.ICE-unix/1314'
+    'QT_ACCESSIBILITY' => '1'
+    'COLORTERM' => 'truecolor'
+    'XDG_CONFIG_DIRS' => '/etc/xdg/xdg-xfce:/etc/xdg'
+    'XDG_SESSION_PATH' => '/org/freedesktop/DisplayManager/Session0'
+    'XDG_MENU_PREFIX' => 'xfce-'
+    'TERM_PROGRAM_VERSION' => '1.107.0'
+    'CLUTTER_BACKEND' => 'x11'
+    'GNOME_KEYRING_CONTROL' => '/run/user/1000/keyring'
+    'LANGUAGE' => 'pt_BR:pt:en'
+    'SSH_AUTH_SOCK' => '/run/user/1000/keyring/ssh'
+    'DESKTOP_SESSION' => 'xfce'
+    'GTK_MODULES' => 'gail:atk-bridge'
+    'XDG_SEAT' => 'seat0'
+    'PWD' => '/home/andrei/Área de trabalho/html/control'
+    'XDG_SESSION_DESKTOP' => 'xfce'
+    'LOGNAME' => 'andrei'
+    'XDG_SESSION_TYPE' => 'x11'
+    'PANEL_GDK_CORE_DEVICE_EVENTS' => '0'
+    'GPG_AGENT_INFO' => '/run/user/1000/gnupg/S.gpg-agent:0:1'
+    'XAUTHORITY' => '/home/andrei/.Xauthority'
+    'VSCODE_GIT_ASKPASS_NODE' => '/usr/share/code/code'
+    'XDG_GREETER_DATA_DIR' => '/var/lib/lightdm-data/andrei'
+    'GDM_LANG' => 'pt_BR'
+    'HOME' => '/home/andrei'
+    'LANG' => 'pt_BR.UTF-8'
+    'LS_COLORS' => 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:'
+    'XDG_CURRENT_DESKTOP' => 'XFCE'
+    'GIT_ASKPASS' => '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'
+    'XDG_SEAT_PATH' => '/org/freedesktop/DisplayManager/Seat0'
+    'CHROME_DESKTOP' => 'code.desktop'
+    'VSCODE_GIT_ASKPASS_EXTRA_ARGS' => ''
+    'VSCODE_PYTHON_AUTOACTIVATE_GUARD' => '1'
+    'LESSCLOSE' => '/usr/bin/lesspipe %s %s'
+    'XDG_SESSION_CLASS' => 'user'
+    'TERM' => 'xterm-256color'
+    'LESSOPEN' => '| /usr/bin/lesspipe %s'
+    'USER' => 'andrei'
+    'GIT_PAGER' => 'cat'
+    'VSCODE_GIT_IPC_HANDLE' => '/run/user/1000/vscode-git-d5bf4429ea.sock'
+    'DISPLAY' => ':0.0'
+    'SHLVL' => '1'
+    'XDG_VTNR' => '7'
+    'XDG_SESSION_ID' => 'c2'
+    'FC_FONTATIONS' => '1'
+    'XDG_RUNTIME_DIR' => '/run/user/1000'
+    'COMPIZ_CONFIG_PROFILE' => 'mint'
+    'VSCODE_GIT_ASKPASS_MAIN' => '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'
+    'GTK3_MODULES' => 'xapp-gtk3-module'
+    'XDG_DATA_DIRS' => '/usr/share/xfce4:/home/andrei/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share'
+    'GDK_BACKEND' => 'x11'
+    'PATH' => '/home/andrei/.config/Code/User/globalStorage/github.copilot-chat/debugCommand:/home/andrei/.config/Code/User/globalStorage/github.copilot-chat/copilotCli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+    'GDMSESSION' => 'xfce'
+    'DBUS_SESSION_BUS_ADDRESS' => 'unix:path=/run/user/1000/bus'
+    'TERM_PROGRAM' => 'vscode'
+    'OLDPWD' => '/home/andrei/Área de trabalho/html/control'
+    '_' => '/usr/bin/php'
+    'PHP_SELF' => 'yii'
+    'SCRIPT_NAME' => 'yii'
+    'SCRIPT_FILENAME' => 'yii'
+    'PATH_TRANSLATED' => 'yii'
+    'DOCUMENT_ROOT' => ''
+    'REQUEST_TIME_FLOAT' => 1766192937.2289
+    'REQUEST_TIME' => 1766192937
+    'argv' => [
+        0 => 'yii'
+        1 => 'migrate/up'
+        2 => '--interactive=0'
+    ]
+    'argc' => 3
+]
+2025-12-20 01:10:16 [][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: Exception (Invalid Configuration) 'yii\base\InvalidConfigException' with message 'Unable to determine the request URI.' 
+
+in /var/www/html/control/vendor/yiisoft/yii2/web/Request.php:1116
+
+Stack trace:
+#0 /var/www/html/control/vendor/yiisoft/yii2/web/Request.php(1076): yii\web\Request->resolveRequestUri()
+#1 /var/www/html/control/vendor/yiisoft/yii2/web/Request.php(1061): yii\web\Request->getUrl()
+#2 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(249): yii\web\Request->getAbsoluteUrl()
+#3 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(55): yii\debug\LogTarget->collectSummary()
+#4 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(183): yii\debug\LogTarget->export()
+#5 /var/www/html/control/vendor/yiisoft/yii2/log/Dispatcher.php(194): yii\debug\LogTarget->collect()
+#6 /var/www/html/control/vendor/yiisoft/yii2/log/Logger.php(225): yii\log\Dispatcher->dispatch()
+#7 [internal function]: yii\log\Logger->flush()
+#8 {main}
+2025-12-20 01:10:16 [][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'SHELL' => '/bin/bash'
+    'SESSION_MANAGER' => 'local/andrei:@/tmp/.ICE-unix/1314,unix/andrei:/tmp/.ICE-unix/1314'
+    'QT_ACCESSIBILITY' => '1'
+    'COLORTERM' => 'truecolor'
+    'XDG_CONFIG_DIRS' => '/etc/xdg/xdg-xfce:/etc/xdg'
+    'XDG_SESSION_PATH' => '/org/freedesktop/DisplayManager/Session0'
+    'XDG_MENU_PREFIX' => 'xfce-'
+    'TERM_PROGRAM_VERSION' => '1.107.0'
+    'CLUTTER_BACKEND' => 'x11'
+    'GNOME_KEYRING_CONTROL' => '/run/user/1000/keyring'
+    'LANGUAGE' => 'pt_BR:pt:en'
+    'SSH_AUTH_SOCK' => '/run/user/1000/keyring/ssh'
+    'DESKTOP_SESSION' => 'xfce'
+    'GTK_MODULES' => 'gail:atk-bridge'
+    'XDG_SEAT' => 'seat0'
+    'PWD' => '/home/andrei/Área de trabalho/html/control'
+    'XDG_SESSION_DESKTOP' => 'xfce'
+    'LOGNAME' => 'andrei'
+    'XDG_SESSION_TYPE' => 'x11'
+    'PANEL_GDK_CORE_DEVICE_EVENTS' => '0'
+    'GPG_AGENT_INFO' => '/run/user/1000/gnupg/S.gpg-agent:0:1'
+    'XAUTHORITY' => '/home/andrei/.Xauthority'
+    'VSCODE_GIT_ASKPASS_NODE' => '/usr/share/code/code'
+    'XDG_GREETER_DATA_DIR' => '/var/lib/lightdm-data/andrei'
+    'GDM_LANG' => 'pt_BR'
+    'HOME' => '/home/andrei'
+    'LANG' => 'pt_BR.UTF-8'
+    'LS_COLORS' => 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:'
+    'XDG_CURRENT_DESKTOP' => 'XFCE'
+    'GIT_ASKPASS' => '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'
+    'XDG_SEAT_PATH' => '/org/freedesktop/DisplayManager/Seat0'
+    'CHROME_DESKTOP' => 'code.desktop'
+    'VSCODE_GIT_ASKPASS_EXTRA_ARGS' => ''
+    'VSCODE_PYTHON_AUTOACTIVATE_GUARD' => '1'
+    'LESSCLOSE' => '/usr/bin/lesspipe %s %s'
+    'XDG_SESSION_CLASS' => 'user'
+    'TERM' => 'xterm-256color'
+    'LESSOPEN' => '| /usr/bin/lesspipe %s'
+    'USER' => 'andrei'
+    'GIT_PAGER' => 'cat'
+    'VSCODE_GIT_IPC_HANDLE' => '/run/user/1000/vscode-git-d5bf4429ea.sock'
+    'DISPLAY' => ':0.0'
+    'SHLVL' => '1'
+    'XDG_VTNR' => '7'
+    'XDG_SESSION_ID' => 'c2'
+    'FC_FONTATIONS' => '1'
+    'XDG_RUNTIME_DIR' => '/run/user/1000'
+    'COMPIZ_CONFIG_PROFILE' => 'mint'
+    'VSCODE_GIT_ASKPASS_MAIN' => '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'
+    'GTK3_MODULES' => 'xapp-gtk3-module'
+    'XDG_DATA_DIRS' => '/usr/share/xfce4:/home/andrei/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share'
+    'GDK_BACKEND' => 'x11'
+    'PATH' => '/home/andrei/.config/Code/User/globalStorage/github.copilot-chat/debugCommand:/home/andrei/.config/Code/User/globalStorage/github.copilot-chat/copilotCli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+    'GDMSESSION' => 'xfce'
+    'DBUS_SESSION_BUS_ADDRESS' => 'unix:path=/run/user/1000/bus'
+    'TERM_PROGRAM' => 'vscode'
+    'OLDPWD' => '/home/andrei/Área de trabalho/html/control'
+    '_' => '/usr/bin/php'
+    'PHP_SELF' => 'test-horario-empresa.php'
+    'SCRIPT_NAME' => 'test-horario-empresa.php'
+    'SCRIPT_FILENAME' => 'test-horario-empresa.php'
+    'PATH_TRANSLATED' => 'test-horario-empresa.php'
+    'DOCUMENT_ROOT' => ''
+    'REQUEST_TIME_FLOAT' => 1766193016.1493
+    'REQUEST_TIME' => 1766193016
+    'argv' => [
+        0 => 'test-horario-empresa.php'
+    ]
+    'argc' => 1
+]
+2025-12-20 01:15:57 [-][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: Exception (Invalid Configuration) 'yii\base\InvalidConfigException' with message 'Unable to open debug data index file: /var/www/html/control/runtime/debug/index.data' 
+
+in /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php:141
+
+Stack trace:
+#0 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(80): yii\debug\LogTarget->updateIndexFile()
+#1 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(183): yii\debug\LogTarget->export()
+#2 /var/www/html/control/vendor/yiisoft/yii2/log/Dispatcher.php(194): yii\debug\LogTarget->collect()
+#3 /var/www/html/control/vendor/yiisoft/yii2/log/Logger.php(225): yii\log\Dispatcher->dispatch()
+#4 [internal function]: yii\log\Logger->flush()
+#5 {main}
+2025-12-20 01:15:50 [-][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'SHELL' => '/bin/bash'
+    'SESSION_MANAGER' => 'local/andrei:@/tmp/.ICE-unix/1314,unix/andrei:/tmp/.ICE-unix/1314'
+    'QT_ACCESSIBILITY' => '1'
+    'COLORTERM' => 'truecolor'
+    'XDG_CONFIG_DIRS' => '/etc/xdg/xdg-xfce:/etc/xdg'
+    'XDG_SESSION_PATH' => '/org/freedesktop/DisplayManager/Session0'
+    'XDG_MENU_PREFIX' => 'xfce-'
+    'TERM_PROGRAM_VERSION' => '1.107.0'
+    'CLUTTER_BACKEND' => 'x11'
+    'GNOME_KEYRING_CONTROL' => '/run/user/1000/keyring'
+    'LANGUAGE' => 'pt_BR:pt:en'
+    'SSH_AUTH_SOCK' => '/run/user/1000/keyring/ssh'
+    'DESKTOP_SESSION' => 'xfce'
+    'GTK_MODULES' => 'gail:atk-bridge'
+    'XDG_SEAT' => 'seat0'
+    'PWD' => '/home/andrei/Área de trabalho/html/control'
+    'XDG_SESSION_DESKTOP' => 'xfce'
+    'LOGNAME' => 'andrei'
+    'XDG_SESSION_TYPE' => 'x11'
+    'PANEL_GDK_CORE_DEVICE_EVENTS' => '0'
+    'GPG_AGENT_INFO' => '/run/user/1000/gnupg/S.gpg-agent:0:1'
+    'XAUTHORITY' => '/home/andrei/.Xauthority'
+    'VSCODE_GIT_ASKPASS_NODE' => '/usr/share/code/code'
+    'XDG_GREETER_DATA_DIR' => '/var/lib/lightdm-data/andrei'
+    'GDM_LANG' => 'pt_BR'
+    'HOME' => '/home/andrei'
+    'LANG' => 'pt_BR.UTF-8'
+    'LS_COLORS' => 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:'
+    'XDG_CURRENT_DESKTOP' => 'XFCE'
+    'GIT_ASKPASS' => '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'
+    'XDG_SEAT_PATH' => '/org/freedesktop/DisplayManager/Seat0'
+    'CHROME_DESKTOP' => 'code.desktop'
+    'VSCODE_GIT_ASKPASS_EXTRA_ARGS' => ''
+    'VSCODE_PYTHON_AUTOACTIVATE_GUARD' => '1'
+    'LESSCLOSE' => '/usr/bin/lesspipe %s %s'
+    'XDG_SESSION_CLASS' => 'user'
+    'TERM' => 'xterm-256color'
+    'LESSOPEN' => '| /usr/bin/lesspipe %s'
+    'USER' => 'andrei'
+    'GIT_PAGER' => 'cat'
+    'VSCODE_GIT_IPC_HANDLE' => '/run/user/1000/vscode-git-d5bf4429ea.sock'
+    'DISPLAY' => ':0.0'
+    'SHLVL' => '1'
+    'XDG_VTNR' => '7'
+    'XDG_SESSION_ID' => 'c2'
+    'FC_FONTATIONS' => '1'
+    'XDG_RUNTIME_DIR' => '/run/user/1000'
+    'COMPIZ_CONFIG_PROFILE' => 'mint'
+    'VSCODE_GIT_ASKPASS_MAIN' => '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'
+    'GTK3_MODULES' => 'xapp-gtk3-module'
+    'XDG_DATA_DIRS' => '/usr/share/xfce4:/home/andrei/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share'
+    'GDK_BACKEND' => 'x11'
+    'PATH' => '/home/andrei/.config/Code/User/globalStorage/github.copilot-chat/debugCommand:/home/andrei/.config/Code/User/globalStorage/github.copilot-chat/copilotCli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+    'GDMSESSION' => 'xfce'
+    'DBUS_SESSION_BUS_ADDRESS' => 'unix:path=/run/user/1000/bus'
+    'TERM_PROGRAM' => 'vscode'
+    'OLDPWD' => '/home/andrei/Área de trabalho/html/control'
+    '_' => '/usr/bin/php'
+    'PHP_SELF' => 'yii'
+    'SCRIPT_NAME' => 'yii'
+    'SCRIPT_FILENAME' => 'yii'
+    'PATH_TRANSLATED' => 'yii'
+    'DOCUMENT_ROOT' => ''
+    'REQUEST_TIME_FLOAT' => 1766193350.6876
+    'REQUEST_TIME' => 1766193350
+    'argv' => [
+        0 => 'yii'
+        1 => 'migrate/up'
+        2 => '--interactive=0'
+    ]
+    'argc' => 3
+]
+2025-12-20 01:43:18 [-][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: Exception (Invalid Configuration) 'yii\base\InvalidConfigException' with message 'Unable to open debug data index file: /var/www/html/control/runtime/debug/index.data' 
+
+in /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php:141
+
+Stack trace:
+#0 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(80): yii\debug\LogTarget->updateIndexFile()
+#1 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(183): yii\debug\LogTarget->export()
+#2 /var/www/html/control/vendor/yiisoft/yii2/log/Dispatcher.php(194): yii\debug\LogTarget->collect()
+#3 /var/www/html/control/vendor/yiisoft/yii2/log/Logger.php(225): yii\log\Dispatcher->dispatch()
+#4 [internal function]: yii\log\Logger->flush()
+#5 {main}
+2025-12-20 01:43:12 [-][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'SHELL' => '/bin/bash'
+    'SESSION_MANAGER' => 'local/andrei:@/tmp/.ICE-unix/1314,unix/andrei:/tmp/.ICE-unix/1314'
+    'QT_ACCESSIBILITY' => '1'
+    'COLORTERM' => 'truecolor'
+    'XDG_CONFIG_DIRS' => '/etc/xdg/xdg-xfce:/etc/xdg'
+    'XDG_SESSION_PATH' => '/org/freedesktop/DisplayManager/Session0'
+    'XDG_MENU_PREFIX' => 'xfce-'
+    'TERM_PROGRAM_VERSION' => '1.107.0'
+    'CLUTTER_BACKEND' => 'x11'
+    'GNOME_KEYRING_CONTROL' => '/run/user/1000/keyring'
+    'LANGUAGE' => 'pt_BR:pt:en'
+    'SSH_AUTH_SOCK' => '/run/user/1000/keyring/ssh'
+    'DESKTOP_SESSION' => 'xfce'
+    'GTK_MODULES' => 'gail:atk-bridge'
+    'XDG_SEAT' => 'seat0'
+    'PWD' => '/home/andrei/Área de trabalho/html/control'
+    'XDG_SESSION_DESKTOP' => 'xfce'
+    'LOGNAME' => 'andrei'
+    'XDG_SESSION_TYPE' => 'x11'
+    'PANEL_GDK_CORE_DEVICE_EVENTS' => '0'
+    'GPG_AGENT_INFO' => '/run/user/1000/gnupg/S.gpg-agent:0:1'
+    'XAUTHORITY' => '/home/andrei/.Xauthority'
+    'VSCODE_GIT_ASKPASS_NODE' => '/usr/share/code/code'
+    'XDG_GREETER_DATA_DIR' => '/var/lib/lightdm-data/andrei'
+    'GDM_LANG' => 'pt_BR'
+    'HOME' => '/home/andrei'
+    'LANG' => 'pt_BR.UTF-8'
+    'LS_COLORS' => 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:'
+    'XDG_CURRENT_DESKTOP' => 'XFCE'
+    'GIT_ASKPASS' => '/usr/share/code/resources/app/extensions/git/dist/askpass.sh'
+    'XDG_SEAT_PATH' => '/org/freedesktop/DisplayManager/Seat0'
+    'CHROME_DESKTOP' => 'code.desktop'
+    'VSCODE_GIT_ASKPASS_EXTRA_ARGS' => ''
+    'VSCODE_PYTHON_AUTOACTIVATE_GUARD' => '1'
+    'LESSCLOSE' => '/usr/bin/lesspipe %s %s'
+    'XDG_SESSION_CLASS' => 'user'
+    'TERM' => 'xterm-256color'
+    'LESSOPEN' => '| /usr/bin/lesspipe %s'
+    'USER' => 'andrei'
+    'GIT_PAGER' => 'cat'
+    'VSCODE_GIT_IPC_HANDLE' => '/run/user/1000/vscode-git-d5bf4429ea.sock'
+    'DISPLAY' => ':0.0'
+    'SHLVL' => '1'
+    'XDG_VTNR' => '7'
+    'XDG_SESSION_ID' => 'c2'
+    'FC_FONTATIONS' => '1'
+    'XDG_RUNTIME_DIR' => '/run/user/1000'
+    'COMPIZ_CONFIG_PROFILE' => 'mint'
+    'VSCODE_GIT_ASKPASS_MAIN' => '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js'
+    'GTK3_MODULES' => 'xapp-gtk3-module'
+    'XDG_DATA_DIRS' => '/usr/share/xfce4:/home/andrei/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share'
+    'GDK_BACKEND' => 'x11'
+    'PATH' => '/home/andrei/.config/Code/User/globalStorage/github.copilot-chat/debugCommand:/home/andrei/.config/Code/User/globalStorage/github.copilot-chat/copilotCli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+    'GDMSESSION' => 'xfce'
+    'DBUS_SESSION_BUS_ADDRESS' => 'unix:path=/run/user/1000/bus'
+    'TERM_PROGRAM' => 'vscode'
+    'OLDPWD' => '/home/andrei/Área de trabalho/html/control'
+    '_' => '/usr/bin/php'
+    'PHP_SELF' => 'yii'
+    'SCRIPT_NAME' => 'yii'
+    'SCRIPT_FILENAME' => 'yii'
+    'PATH_TRANSLATED' => 'yii'
+    'DOCUMENT_ROOT' => ''
+    'REQUEST_TIME_FLOAT' => 1766194992.7193
+    'REQUEST_TIME' => 1766194992
+    'argv' => [
+        0 => 'yii'
+        1 => 'migrate/up'
+        2 => '--interactive=0'
+    ]
+    'argc' => 3
+]
+2025-12-20 01:45:11 [127.0.0.1][-][-][warning][yii\log\Dispatcher::dispatch] Unable to send log via yii\debug\LogTarget: Exception (Invalid Configuration) 'yii\base\InvalidConfigException' with message 'Unable to open debug data index file: /var/www/html/control/runtime/debug/index.data' 
+
+in /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php:141
+
+Stack trace:
+#0 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(80): yii\debug\LogTarget->updateIndexFile()
+#1 /var/www/html/control/vendor/yiisoft/yii2-debug/src/LogTarget.php(183): yii\debug\LogTarget->export()
+#2 /var/www/html/control/vendor/yiisoft/yii2/log/Dispatcher.php(194): yii\debug\LogTarget->collect()
+#3 /var/www/html/control/vendor/yiisoft/yii2/log/Logger.php(225): yii\log\Dispatcher->dispatch()
+#4 [internal function]: yii\log\Logger->flush()
+#5 {main}
+2025-12-20 01:45:11 [127.0.0.1][-][-][info][application] $_GET = [
+    'id' => '0786bb3c-82e8-43f3-b5f1-a761644747e4'
+    'vscodeBrowserReqId' => '1766195111142'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'DOCUMENT_ROOT' => '/var/www/html/control/web'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'REMOTE_PORT' => '49662'
+    'SERVER_SOFTWARE' => 'PHP/8.3.6 (Development Server)'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_PORT' => '8888'
+    'REQUEST_URI' => '/?id=0786bb3c-82e8-43f3-b5f1-a761644747e4&vscodeBrowserReqId=1766195111142'
+    'REQUEST_METHOD' => 'GET'
+    'SCRIPT_NAME' => '/index.php'
+    'SCRIPT_FILENAME' => '/var/www/html/control/web/index.php'
+    'PHP_SELF' => '/index.php'
+    'QUERY_STRING' => 'id=0786bb3c-82e8-43f3-b5f1-a761644747e4&vscodeBrowserReqId=1766195111142'
+    'HTTP_HOST' => 'localhost:8888'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.107.0 Chrome/142.0.7444.175 Electron/39.2.3 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'cross-site'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_DEST' => 'iframe'
+    'HTTP_SEC_FETCH_STORAGE_ACCESS' => 'active'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-BR'
+    'REQUEST_TIME_FLOAT' => 1766195111.1681
+    'REQUEST_TIME' => 1766195111
+]

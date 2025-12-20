@@ -9,12 +9,20 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Empresa;
+use app\models\Usuario;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
+    public function beforeAction($action)
+    {
+        // Desabilitar CSRF para ações públicas ou de logout
+        if (in_array($action->id, ['contato', 'logout'])) {
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
+
     public function behaviors()
     {
         return [
@@ -38,36 +46,37 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
         ];
     }
 
     /**
-     * Displays homepage.
-     *
-     * @return string
+     * Página inicial
      */
     public function actionIndex()
     {
+        if (!Yii::$app->user->isGuest) {
+            $user = Yii::$app->user->identity;
+            
+            if ($user->isAdmin()) {
+                return $this->redirect(['admin/index']);
+            } elseif ($user->isAdminEmpresa()) {
+                return $this->redirect(['empresa/index']);
+            } elseif ($user->isCliente()) {
+                return $this->redirect(['cliente/index']);
+            }
+        }
+
         return $this->render('index');
     }
 
     /**
-     * Login action.
-     *
-     * @return Response|string
+     * Login
      */
     public function actionLogin()
     {
@@ -77,7 +86,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->goHome();
         }
 
         $model->password = '';
@@ -87,42 +96,64 @@ class SiteController extends Controller
     }
 
     /**
-     * Logout action.
-     *
-     * @return Response
+     * Logout
      */
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
     /**
-     * Displays contact page.
-     *
-     * @return Response|string
+     * Cadastro de empresa
      */
-    public function actionContact()
+    public function actionCadastroEmpresa()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+        $model = new Empresa();
 
-            return $this->refresh();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // Criar usuário admin da empresa
+            $usuario = new Usuario();
+            $usuario->username = $model->nome . '_admin';
+            $usuario->email = $model->email;
+            $usuario->setPassword(Yii::$app->request->post('senha'));
+            $usuario->generateAuthKey();
+            $usuario->role = Usuario::ROLE_ADMIN_EMPRESA;
+            $usuario->empresa_id = $model->id;
+            $usuario->nome_completo = Yii::$app->request->post('responsavel');
+            $usuario->status = 1;
+            
+            if ($usuario->save()) {
+                Yii::$app->session->setFlash('success', 'Empresa cadastrada com sucesso! Faça login para começar.');
+                return $this->redirect(['login']);
+            }
         }
-        return $this->render('contact', [
+
+        return $this->render('cadastro-empresa', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Displays about page.
-     *
-     * @return string
+     * Página de contato
      */
-    public function actionAbout()
+    public function actionContato()
     {
-        return $this->render('about');
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+            Yii::$app->session->setFlash('success', 'Obrigado pela sua mensagem. Entraremos em contato com você em breve.');
+            return $this->refresh();
+        }
+        return $this->render('contato', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Sobre
+     */
+    public function actionSobre()
+    {
+        return $this->render('sobre');
     }
 }

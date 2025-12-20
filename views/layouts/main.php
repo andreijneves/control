@@ -1,28 +1,18 @@
 <?php
 
-/** @var yii\web\View $this */
-/** @var string $content */
-
-use app\assets\AppAsset;
-use app\widgets\Alert;
-use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use app\assets\AppAsset;
 
 AppAsset::register($this);
-
-$this->registerCsrfMetaTags();
-$this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
-$this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
-$this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
-$this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
-$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
@@ -34,36 +24,69 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
+        'options' => ['class' => 'navbar navbar-expand-md navbar-dark bg-dark sticky-top'],
     ]);
+
+    $menuItems = [];
+    if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Início', 'url' => ['/site/index']];
+        
+        $menuItems[] = ['label' => 'Sobre', 'url' => ['/site/sobre']];
+        $menuItems[] = ['label' => 'Contato', 'url' => ['/site/contato']];
+        $menuItems[] = ['label' => '🏢 Cadastrar Empresa', 'url' => ['/site/cadastro-empresa']];
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login'], 'linkOptions' => ['class' => 'nav-link btn btn-primary text-white ms-2']];
+    } else {
+        $user = Yii::$app->user->identity;
+        
+        if ($user->isAdmin()) {
+            $menuItems[] = ['label' => 'Dashboard', 'url' => ['/admin/index']];
+            $menuItems[] = ['label' => 'Empresas', 'url' => ['/admin/empresas']];
+        } elseif ($user->isAdminEmpresa()) {
+            $menuItems[] = ['label' => 'Dashboard', 'url' => ['/empresa/index']];
+            $menuItems[] = ['label' => 'Serviços', 'url' => ['/empresa/servicos']];
+            $menuItems[] = ['label' => 'Funcionários', 'url' => ['/empresa/funcionarios']];
+            $menuItems[] = ['label' => 'Clientes', 'url' => ['/empresa/clientes']];
+            $menuItems[] = ['label' => 'Agendamentos', 'url' => ['/empresa/agendamentos']];
+            $menuItems[] = [
+                'label' => '⚙️ Configurações',
+                'items' => [
+                    ['label' => '🕐 Horários da Empresa', 'url' => ['/empresa/horario-empresa']],
+                    ['label' => '👥 Horários dos Funcionários', 'url' => ['/empresa/configurar-horarios']],
+                    ['label' => '📋 Configurações Gerais', 'url' => ['/empresa/configuracoes']],
+                ],
+            ];
+            $menuItems[] = ['label' => '👁️ Área Pública', 'url' => ['/cliente/empresas'], 'linkOptions' => ['class' => 'nav-link btn btn-outline-light ms-2']];
+        } elseif ($user->isCliente()) {
+            $menuItems[] = ['label' => 'Meu Painel', 'url' => ['/cliente/index']];
+            
+            // Buscar empresa do cliente
+            $cliente = \app\models\Cliente::findOne(['usuario_id' => $user->id]);
+            if ($cliente && $cliente->empresa_id) {
+                $menuItems[] = ['label' => 'Novo Agendamento', 'url' => ['/cliente/area-publica', 'empresa_id' => $cliente->empresa_id]];
+            }
+        }
+
+        $menuItems[] = ['label' => 'Logout (' . Html::encode($user->nome_completo ?: $user->username) . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+    }
+
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest
-                ? ['label' => 'Login', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
+        'options' => ['class' => 'navbar-nav ms-auto'],
+        'items' => $menuItems,
     ]);
+
     NavBar::end();
     ?>
 </header>
 
 <main id="main" class="flex-shrink-0" role="main">
     <div class="container">
-        <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-        <?php endif ?>
-        <?= Alert::widget() ?>
+        <?php
+        if (!empty($this->params['breadcrumbs'])) {
+            echo \yii\bootstrap5\Breadcrumbs::widget([
+                'links' => $this->params['breadcrumbs'],
+            ]);
+        }
+        ?>
         <?= $content ?>
     </div>
 </main>
