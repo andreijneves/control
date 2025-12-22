@@ -41,6 +41,7 @@ AppAsset::register($this);
         if ($user->isAdmin()) {
             $menuItems[] = ['label' => 'Dashboard', 'url' => ['/admin/index']];
             $menuItems[] = ['label' => 'Empresas', 'url' => ['/admin/empresas']];
+            $menuItems[] = ['label' => 'Usuários', 'url' => ['/admin/usuarios']];
         } elseif ($user->isAdminEmpresa()) {
             $menuItems[] = ['label' => 'Dashboard', 'url' => ['/empresa/index']];
             $menuItems[] = ['label' => 'Serviços', 'url' => ['/empresa/servicos']];
@@ -48,14 +49,16 @@ AppAsset::register($this);
             $menuItems[] = ['label' => 'Clientes', 'url' => ['/empresa/clientes']];
             $menuItems[] = ['label' => 'Agendamentos', 'url' => ['/empresa/agendamentos']];
             $menuItems[] = [
-                'label' => '⚙️ Configurações',
+                'label' => '🌐 Área Pública',
                 'items' => [
+                    ['label' => '👁️ Visualizar Área Pública', 'url' => ['/cliente/area-publica', 'empresa_id' => $user->empresa_id], 'linkOptions' => ['target' => '_blank']],
+                    '<div class="dropdown-divider"></div>',
+                    ['label' => '⚙️ Configurações', 'options' => ['class' => 'dropdown-header']],
                     ['label' => '🕐 Horários da Empresa', 'url' => ['/empresa/horario-empresa']],
                     ['label' => '👥 Horários dos Funcionários', 'url' => ['/empresa/configurar-horarios']],
                     ['label' => '📋 Configurações Gerais', 'url' => ['/empresa/configuracoes']],
                 ],
             ];
-            $menuItems[] = ['label' => '👁️ Área Pública', 'url' => ['/cliente/empresas'], 'linkOptions' => ['class' => 'nav-link btn btn-outline-light ms-2']];
         } elseif ($user->isCliente()) {
             $menuItems[] = ['label' => 'Meu Painel', 'url' => ['/cliente/index']];
             

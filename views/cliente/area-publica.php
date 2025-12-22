@@ -33,6 +33,31 @@ $this->params['breadcrumbs'][] = $empresa->nome;
         <?php endif; ?>
     </div>
 
+    <!-- Mensagens Flash -->
+    <?php if (Yii::$app->session->hasFlash('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i>
+            <?= Yii::$app->session->getFlash('success') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if (Yii::$app->session->hasFlash('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i>
+            <?= Yii::$app->session->getFlash('error') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if (Yii::$app->session->hasFlash('info')): ?>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="fas fa-info-circle"></i>
+            <?= Yii::$app->session->getFlash('info') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
     <div class="row">
         <!-- Coluna 1: Informações da empresa -->
         <div class="col-lg-4 mb-4">
@@ -244,12 +269,27 @@ $this->params['breadcrumbs'][] = $empresa->nome;
                             </button>
                         </div>
                         
+                        <?php if (Yii::$app->user->isGuest): ?>
                             <div class="text-center mt-3">
                                 <small class="text-muted">
                                     Já tem conta na empresa <?= Html::encode($empresa->nome) ?>? 
-                                    <?= Html::a('Faça login aqui', ['/cliente/login-cliente'], ['class' => 'fw-bold']) ?>
+                                    <?= Html::a('Faça login aqui', ['/cliente/login-cliente', 'empresa_id' => $empresa->id], ['class' => 'fw-bold']) ?>
                                 </small>
                             </div>
+                        <?php endif; ?>
+                        
+                        <!-- Link sempre visível para área de login -->
+                        <div class="text-center mt-4">
+                            <div class="border-top pt-3">
+                                <?= Html::a(
+                                    '<i class="fas fa-sign-in-alt"></i> Área de Login de Clientes', 
+                                    ['/cliente/login-cliente', 'empresa_id' => $empresa->id], 
+                                    ['class' => 'btn btn-outline-primary btn-sm']
+                                ) ?>
+                                <br>
+                                <small class="text-muted">Já é cliente? Acesse sua conta aqui</small>
+                            </div>
+                        </div>
                         
                         <?php ActiveForm::end(); ?>
                     <?php endif; ?>
@@ -261,7 +301,32 @@ $this->params['breadcrumbs'][] = $empresa->nome;
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Combinar data e horário em data_agendamento
+    const form = document.getElementById('form-agendamento');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            let isValid = true;
+            const required = form.querySelectorAll('[required]');
+            
+            required.forEach(function(field) {
+                if (!field.value.trim()) {
+                    field.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('Por favor, preencha todos os campos obrigatórios.');
+            }
+        });
+    }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('form-agendamento');
     if (form) {
         form.addEventListener('submit', function(e) {
@@ -269,9 +334,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const horarioInput = form.querySelector('input[name="Agendamento[horario]"]');
             
             if (dataInput && horarioInput && dataInput.value && horarioInput.value) {
-                const dataHorario = dataInput.value + ' ' + horarioInput.value + ':00';
-                dataInput.value = dataHorario;
-                horarioInput.remove();
+                // Criar campo hidden com data e horário combinados
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'Agendamento[data_agendamento]';
+                hiddenInput.value = dataInput.value + ' ' + horarioInput.value + ':00';
+                form.appendChild(hiddenInput);
+                
+                // Desabilitar campos originais para não conflitar
+                dataInput.disabled = true;
+                horarioInput.disabled = true;
             }
         });
     }

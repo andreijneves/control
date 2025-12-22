@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Empresa;
 use app\models\Usuario;
+use yii\helpers\Html;
 
 class SiteController extends Controller
 {
@@ -114,7 +115,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             // Criar usuário admin da empresa
             $usuario = new Usuario();
-            $usuario->username = $model->nome . '_admin';
+            $usuario->username = str_replace(' ', '-', strtolower($model->nome)) . '_admin';
             $usuario->email = $model->email;
             $usuario->setPassword(Yii::$app->request->post('senha'));
             $usuario->generateAuthKey();
@@ -124,8 +125,24 @@ class SiteController extends Controller
             $usuario->status = 1;
             
             if ($usuario->save()) {
-                Yii::$app->session->setFlash('success', 'Empresa cadastrada com sucesso! Faça login para começar.');
+                // Capturar a senha para mostrar no flash
+                $senhaTemporaria = Yii::$app->request->post('senha');
+                
+                // Flash com dados de acesso
+                Yii::$app->session->setFlash('success', 
+                    '<h5>🎉 Empresa cadastrada com sucesso!</h5>' .
+                    '<div class="alert alert-warning mt-3">' .
+                        '<strong>📋 DADOS DE ACESSO - ANOTE COM CUIDADO:</strong><br><br>' .
+                        '<strong>👤 Usuário:</strong> ' . Html::encode($usuario->username) . '<br>' .
+                        '<strong>🔑 Senha:</strong> ' . Html::encode($senhaTemporaria) . '<br>' .
+                        '<strong>📧 E-mail:</strong> ' . Html::encode($usuario->email) . '<br><br>' .
+                        '<small class="text-muted">⚠️ Guarde essas informações em local seguro! Você precisará delas para fazer login.</small>' .
+                    '</div>'
+                );
                 return $this->redirect(['login']);
+            } else {
+                $model->delete(); // Desfazer criação da empresa se usuário falhou
+                Yii::$app->session->setFlash('error', 'Erro ao criar usuário administrativo: ' . implode(', ', $usuario->getFirstErrors()));
             }
         }
 

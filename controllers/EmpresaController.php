@@ -16,7 +16,11 @@ class EmpresaController extends Controller
 {
     public function beforeAction($action)
     {
-        // CSRF está habilitado por padrão
+        // Desabilitar CSRF para ações de agendamento que usam data-method="post"
+        if (in_array($action->id, ['confirmar-agendamento', 'cancelar-agendamento'])) {
+            $this->enableCsrfValidation = false;
+        }
+        
         return parent::beforeAction($action);
     }
 
