@@ -30,7 +30,7 @@ AppAsset::register($this);
     $menuItems = [];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Início', 'url' => ['/site/index']];
-        
+        $menuItems[] = ['label' => '🏪 Área de Clientes', 'url' => ['/cliente/empresas']];
         $menuItems[] = ['label' => 'Sobre', 'url' => ['/site/sobre']];
         $menuItems[] = ['label' => 'Contato', 'url' => ['/site/contato']];
         $menuItems[] = ['label' => '🏢 Cadastrar Empresa', 'url' => ['/site/cadastro-empresa']];
@@ -53,9 +53,6 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => '👁️ Visualizar Área Pública', 'url' => ['/cliente/area-publica', 'empresa_id' => $user->empresa_id], 'linkOptions' => ['target' => '_blank']],
                     '<div class="dropdown-divider"></div>',
-                    ['label' => '⚙️ Configurações', 'options' => ['class' => 'dropdown-header']],
-                    ['label' => '🕐 Horários da Empresa', 'url' => ['/empresa/horario-empresa']],
-                    ['label' => '👥 Horários dos Funcionários', 'url' => ['/empresa/configurar-horarios']],
                     ['label' => '📋 Configurações Gerais', 'url' => ['/empresa/configuracoes']],
                 ],
             ];

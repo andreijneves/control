@@ -12,7 +12,7 @@ $this->title = 'Control - Sistema de Agendamentos';
     <p>Gerencie sua empresa, serviços, funcionários e agendamentos em um único lugar.</p>
     
     <div class="mt-4">
-        <?= Html::a('🏢 Área Pública', ['/cliente/empresas'], ['class' => 'btn btn-success btn-lg me-2']) ?>
+        <?= Html::a('� Área de Clientes', ['/cliente/empresas'], ['class' => 'btn btn-success btn-lg me-2']) ?>
         <?= Html::a('Cadastrar Empresa', ['/site/cadastro-empresa'], ['class' => 'btn btn-primary btn-lg me-2']) ?>
         <?= Html::a('Fazer Login', ['/site/login'], ['class' => 'btn btn-secondary btn-lg']) ?>
     </div>

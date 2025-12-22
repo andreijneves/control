@@ -9,6 +9,11 @@ $this->title = 'Escolha uma Empresa';
     <div class="hero-section text-center mb-5">
         <h1 class="display-4 mb-3">🏢 Encontre os Melhores Serviços</h1>
         <p class="lead text-muted">Escolha uma empresa e agende seus serviços de forma rápida e fácil</p>
+        
+        <div class="alert alert-info d-inline-block mt-3">
+            <i class="fas fa-info-circle"></i>
+            <strong>Como funciona:</strong> Escolha uma empresa → Cadastre-se ou faça login → Agende seus serviços online
+        </div>
     </div>
 
     <?php if (empty($empresas)): ?>

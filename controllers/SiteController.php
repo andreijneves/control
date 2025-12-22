@@ -115,7 +115,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             // Criar usuário admin da empresa
             $usuario = new Usuario();
-            $usuario->username = str_replace(' ', '-', strtolower($model->nome)) . '_admin';
+            $usuario->username = $model->email; // Username sempre igual ao email do formulário
             $usuario->email = $model->email;
             $usuario->setPassword(Yii::$app->request->post('senha'));
             $usuario->generateAuthKey();

@@ -65,10 +65,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h5 class="mb-0">📋 Outras Configurações</h5>
                 </div>
                 <div class="list-group list-group-flush">
-                    <a href="<?= \yii\helpers\Url::to(['/empresa/configurar-horarios']) ?>" class="list-group-item list-group-item-action">
-                        <h6 class="mb-1">🕐 Horários de Funcionamento</h6>
-                        <p class="mb-0 small text-muted">Configure os horários da empresa por dia da semana</p>
-                    </a>
                     <a href="#" class="list-group-item list-group-item-action disabled">
                         <h6 class="mb-1">🎨 Aparência</h6>
                         <p class="mb-0 small text-muted">Personalize cores e logo (em breve)</p>
