@@ -2,7 +2,7 @@
 
 use yii\bootstrap5\Html;
 
-$this->title = 'Control - Sistema de Agendamentos';
+$this->title = 'Control - gestao de Servicos';
 ?>
 
 <div class="jumbotron text-center bg-light p-5 rounded-lg m-5">
@@ -12,9 +12,13 @@ $this->title = 'Control - Sistema de Agendamentos';
     <p>Gerencie sua empresa, serviços, funcionários e agendamentos em um único lugar.</p>
     
     <div class="mt-4">
-        <?= Html::a('� Área de Clientes', ['/cliente/empresas'], ['class' => 'btn btn-success btn-lg me-2']) ?>
+    <p class="text-muted mb-3">
+        <strong>Transforme sua operação!</strong> Automatize agendamentos, reduza cancelamentos e 
+        aumente a satisfação dos seus clientes. Ganhe mais tempo para focar no que realmente importa: 
+        fazer seu negócio crescer.
+    </p>
         <?= Html::a('Cadastrar Empresa', ['/site/cadastro-empresa'], ['class' => 'btn btn-primary btn-lg me-2']) ?>
-        <?= Html::a('Fazer Login', ['/site/login'], ['class' => 'btn btn-secondary btn-lg']) ?>
+      
     </div>
 </div>
 

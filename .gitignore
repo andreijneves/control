@@ -1,6 +1,10 @@
 # phpstorm project files
 .idea
 
+/runtime/debug/*
+/runtime/session/*
+/runtime/logs/*
+
 # netbeans project files
 nbproject
 

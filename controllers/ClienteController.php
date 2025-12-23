@@ -97,14 +97,221 @@ class ClienteController extends Controller
         }
         
         $servicos = Servico::find()->where(['empresa_id' => $cliente->empresa_id, 'status' => 1])->all();
-        $agendamentos = Agendamento::find()->where(['cliente_id' => $cliente->id])->orderBy(['data_agendamento' => SORT_DESC])->all();
+        $funcionarios = Funcionario::find()->where(['empresa_id' => $cliente->empresa_id, 'status' => 1])->all();
+        $horarios = \app\models\Horario::find()->where(['empresa_id' => $cliente->empresa_id, 'funcionario_id' => null])->all();
 
         return $this->render('index', [
             'cliente' => $cliente,
             'empresa' => $empresa,
             'servicos' => $servicos,
+            'funcionarios' => $funcionarios,
+            'horarios' => $horarios,
+        ]);
+    }
+
+    /**
+     * Página dedicada para agendamentos do cliente
+     */
+    public function actionAgendamentos()
+    {
+        $user = Yii::$app->user->identity;
+        
+        // Buscar cliente associado ao usuário
+        $cliente = Cliente::findOne(['usuario_id' => $user->id]);
+        if (!$cliente) {
+            Yii::$app->session->setFlash('error', 'Perfil de cliente não encontrado.');
+            return $this->redirect(['empresas']);
+        }
+
+        // Cliente pertence a uma empresa específica
+        $empresa = $cliente->empresa;
+        if (!$empresa) {
+            Yii::$app->session->setFlash('error', 'Empresa não encontrada.');
+            return $this->redirect(['empresas']);
+        }
+        
+        // Buscar agendamentos do cliente
+        $agendamentos = Agendamento::find()
+            ->where(['cliente_id' => $cliente->id])
+            ->orderBy(['data_agendamento' => SORT_DESC])
+            ->all();
+        
+        // Dados para novo agendamento
+        $servicos = Servico::find()->where(['empresa_id' => $cliente->empresa_id, 'status' => 1])->all();
+        $funcionarios = Funcionario::find()->where(['empresa_id' => $cliente->empresa_id, 'status' => 1])->all();
+        
+        // Processar novo agendamento se for POST
+        if (Yii::$app->request->isPost) {
+            $agendamento_data = Yii::$app->request->post('Agendamento', []);
+            
+            if (!empty($agendamento_data)) {
+                $agendamento = new Agendamento();
+                
+                // Definir data_agendamento
+                if (!empty($agendamento_data['data_agendamento'])) {
+                    $agendamento->data_agendamento = $agendamento_data['data_agendamento'];
+                } else {
+                    $data = $agendamento_data['data'] ?? '';
+                    $horario = $agendamento_data['horario'] ?? '';
+                    if ($data && $horario) {
+                        $agendamento->data_agendamento = $data . ' ' . $horario . ':00';
+                    }
+                }
+                
+                $agendamento->cliente_id = $cliente->id;
+                $agendamento->empresa_id = $cliente->empresa_id;
+                $agendamento->servico_id = $agendamento_data['servico_id'] ?? null;
+                $agendamento->funcionario_id = $agendamento_data['funcionario_id'] ?? null;
+                $agendamento->status = Agendamento::STATUS_PENDENTE;
+                
+                if ($agendamento->save()) {
+                    Yii::$app->session->setFlash('success', 'Agendamento solicitado com sucesso! A empresa entrará em contato para confirmação.');
+                    return $this->refresh();
+                } else {
+                    Yii::$app->session->setFlash('error', 'Erro ao salvar agendamento: ' . implode(', ', $agendamento->getFirstErrors()));
+                }
+            }
+        }
+
+        return $this->render('agendamentos', [
+            'cliente' => $cliente,
+            'empresa' => $empresa,
             'agendamentos' => $agendamentos,
         ]);
+    }
+
+    /**
+     * Página para criar novo agendamento
+     */
+    public function actionNovoAgendamento()
+    {
+        $user = Yii::$app->user->identity;
+        
+        // Buscar cliente associado ao usuário
+        $cliente = Cliente::findOne(['usuario_id' => $user->id]);
+        if (!$cliente) {
+            Yii::$app->session->setFlash('error', 'Perfil de cliente não encontrado.');
+            return $this->redirect(['empresas']);
+        }
+
+        // Cliente pertence a uma empresa específica
+        $empresa = $cliente->empresa;
+        if (!$empresa) {
+            Yii::$app->session->setFlash('error', 'Empresa não encontrada.');
+            return $this->redirect(['empresas']);
+        }
+        
+        // Dados para novo agendamento
+        $servicos = Servico::find()->where(['empresa_id' => $cliente->empresa_id, 'status' => 1])->all();
+        $funcionarios = Funcionario::find()->where(['empresa_id' => $cliente->empresa_id, 'status' => 1])->all();
+        $horarios = \app\models\Horario::find()->where(['empresa_id' => $cliente->empresa_id, 'funcionario_id' => null])->all();
+        
+        // Processar novo agendamento se for POST
+        if (Yii::$app->request->isPost) {
+            $agendamento_data = Yii::$app->request->post('Agendamento', []);
+            
+            if (!empty($agendamento_data)) {
+                $agendamento = new Agendamento();
+                
+                // Combinar data e horário
+                $data = $agendamento_data['data'] ?? '';
+                $horario = $agendamento_data['horario'] ?? '';
+                if ($data && $horario) {
+                    $agendamento->data_agendamento = $data . ' ' . $horario . ':00';
+                }
+                
+                $agendamento->cliente_id = $cliente->id;
+                $agendamento->empresa_id = $cliente->empresa_id;
+                $agendamento->servico_id = $agendamento_data['servico_id'] ?? null;
+                $agendamento->funcionario_id = $agendamento_data['funcionario_id'] ?? null;
+                $agendamento->observacoes = $agendamento_data['observacoes'] ?? null;
+                $agendamento->status = Agendamento::STATUS_PENDENTE;
+                
+                if ($agendamento->save()) {
+                    Yii::$app->session->setFlash('success', 'Agendamento solicitado com sucesso! A empresa entrará em contato para confirmação.');
+                    return $this->redirect(['agendamentos']);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Erro ao salvar agendamento: ' . implode(', ', $agendamento->getFirstErrors()));
+                }
+            }
+        }
+
+        return $this->render('novo-agendamento', [
+            'cliente' => $cliente,
+            'empresa' => $empresa,
+            'servicos' => $servicos,
+            'funcionarios' => $funcionarios,
+            'horarios' => $horarios,
+        ]);
+    }
+
+    /**
+     * Enviar mensagem de contato para a empresa
+     */
+    public function actionEnviarContato()
+    {
+        if (!Yii::$app->request->isPost) {
+            return $this->redirect(['agendamentos']);
+        }
+
+        $user = Yii::$app->user->identity;
+        $cliente = Cliente::findOne(['usuario_id' => $user->id]);
+        
+        if (!$cliente) {
+            Yii::$app->session->setFlash('error', 'Perfil de cliente não encontrado.');
+            return $this->redirect(['agendamentos']);
+        }
+
+        $empresa_id = Yii::$app->request->post('empresa_id');
+        $assunto = Yii::$app->request->post('assunto');
+        $mensagem = Yii::$app->request->post('mensagem');
+        
+        $empresa = Empresa::findOne($empresa_id);
+        if (!$empresa) {
+            Yii::$app->session->setFlash('error', 'Empresa não encontrada.');
+            return $this->redirect(['agendamentos']);
+        }
+
+        // Verificar se a empresa tem email configurado
+        if (!$empresa->email) {
+            Yii::$app->session->setFlash('error', 'Esta empresa não possui e-mail configurado para contato.');
+            return $this->redirect(['agendamentos']);
+        }
+
+        // Preparar dados do email
+        $nomeCliente = $cliente->nome ?: $user->nome_completo;
+        $emailCliente = $cliente->email ?: $user->email;
+        
+        $subject = '[' . $empresa->nome . '] Mensagem de Cliente: ' . $assunto;
+        $body = "
+            <h3>Nova mensagem de cliente</h3>
+            <p><strong>Cliente:</strong> {$nomeCliente}</p>
+            <p><strong>E-mail:</strong> {$emailCliente}</p>
+            <p><strong>Assunto:</strong> {$assunto}</p>
+            <hr>
+            <p><strong>Mensagem:</strong></p>
+            <div style='background: #f8f9fa; padding: 15px; border-radius: 5px;'>
+                {$mensagem}
+            </div>
+            <hr>
+            <p><small>Mensagem enviada através do sistema de agendamentos em " . date('d/m/Y H:i') . "</small></p>
+        ";
+
+        try {
+            Yii::$app->mailer->compose()
+                ->setFrom([Yii::$app->params['adminEmail'] => $empresa->nome . ' - Sistema'])
+                ->setTo($empresa->email)
+                ->setReplyTo([$emailCliente => $nomeCliente])
+                ->setSubject($subject)
+                ->setHtmlBody($body)
+                ->send();
+
+            Yii::$app->session->setFlash('success', 'Mensagem enviada com sucesso! A empresa entrará em contato em breve.');
+        } catch (Exception $e) {
+            Yii::$app->session->setFlash('error', 'Erro ao enviar mensagem. Tente novamente mais tarde ou entre em contato diretamente com a empresa.');
+        }
+
+        return $this->redirect(['agendamentos']);
     }
 
     public function actionCadastrar()
@@ -154,106 +361,6 @@ class ClienteController extends Controller
         $servicos = Servico::find()->where(['empresa_id' => $empresa_id, 'status' => 1])->all();
         $funcionarios = Funcionario::find()->where(['empresa_id' => $empresa_id, 'status' => 1])->all();
         $horarios = \app\models\Horario::find()->where(['empresa_id' => $empresa_id, 'funcionario_id' => null])->all();
-        
-        // Processar agendamento se for POST
-        if (Yii::$app->request->isPost) {
-            $cliente_data = Yii::$app->request->post('Cliente', []);
-            $agendamento_data = Yii::$app->request->post('Agendamento', []);
-            
-            $cliente = null;
-            
-            // Se usuário não está logado, criar conta automática
-            if (Yii::$app->user->isGuest && !empty($cliente_data)) {
-                $usuario = new Usuario();
-                $cliente_obj = new Cliente();
-                
-                // Verificar se email já existe
-                $existingUser = Usuario::findOne(['email' => $cliente_data['email']]);
-                if ($existingUser) {
-                    Yii::$app->session->setFlash('error', 'Este e-mail já está cadastrado. Use o link "Faça login aqui" para acessar sua conta.');
-                } else {
-                    // Criar usuário
-                    $usuario->username = $cliente_data['email'];
-                    $usuario->email = $cliente_data['email'];
-                    $usuario->setPassword($cliente_data['senha']);
-                    $usuario->generateAuthKey();
-                    $usuario->role = Usuario::ROLE_CLIENTE;
-                    $usuario->nome_completo = $cliente_data['nome'];
-                    $usuario->telefone = $cliente_data['telefone'];
-                    $usuario->empresa_id = $empresa_id;
-                    $usuario->status = 1;
-                    
-                    if ($usuario->save()) {
-                        // Criar cliente
-                        $cliente_obj->usuario_id = $usuario->id;
-                        $cliente_obj->nome = $cliente_data['nome'];
-                        $cliente_obj->email = $cliente_data['email'];
-                        $cliente_obj->telefone = $cliente_data['telefone'];
-                        $cliente_obj->empresa_id = $empresa_id;
-                        $cliente_obj->status = 1;
-                        
-                        if ($cliente_obj->save()) {
-                            // Login automático
-                            Yii::$app->user->login($usuario);
-                            $cliente = $cliente_obj;
-                        } else {
-                            Yii::$app->session->setFlash('error', 'Erro ao criar perfil do cliente: ' . implode(', ', $cliente_obj->getFirstErrors()));
-                        }
-                    } else {
-                        Yii::$app->session->setFlash('error', 'Erro ao criar usuário: ' . implode(', ', $usuario->getFirstErrors()));
-                    }
-                }
-            } else if (!Yii::$app->user->isGuest) {
-                // Usuário já logado
-                $user = Yii::$app->user->identity;
-                
-                // Se é admin da empresa, não pode agendar
-                if ($user->isAdminEmpresa()) {
-                    Yii::$app->session->setFlash('info', 'Como administrador da empresa, você está visualizando a área pública. Para agendar, faça logout e acesse como cliente.');
-                } else {
-                    $cliente = Cliente::findOne(['usuario_id' => $user->id]);
-                    
-                    // Verificar se o cliente pertence à empresa
-                    if ($cliente && $cliente->empresa_id != $empresa_id) {
-                        Yii::$app->session->setFlash('error', 'Você só pode agendar serviços na empresa ' . $cliente->empresa->nome);
-                        return $this->redirect(['area-publica', 'empresa_id' => $cliente->empresa_id]);
-                    }
-                }
-            }
-            
-            // Criar agendamento
-            if ($cliente && !empty($agendamento_data)) {
-                $agendamento = new Agendamento();
-                
-                // Definir data_agendamento (pode vir combinada ou separada)
-                if (!empty($agendamento_data['data_agendamento'])) {
-                    // Se já vem combinada do JavaScript
-                    $agendamento->data_agendamento = $agendamento_data['data_agendamento'];
-                } else {
-                    // Se vem separada, combinar data e horário
-                    $data = $agendamento_data['data_agendamento'] ?? '';
-                    $horario = $agendamento_data['horario'] ?? '';
-                    if ($data && $horario) {
-                        $agendamento->data_agendamento = $data . ' ' . $horario . ':00';
-                    }
-                }
-                
-                $agendamento->cliente_id = $cliente->id;
-                $agendamento->empresa_id = $empresa_id;
-                $agendamento->servico_id = $agendamento_data['servico_id'] ?? null;
-                $agendamento->funcionario_id = $agendamento_data['funcionario_id'] ?? null;
-                $agendamento->status = Agendamento::STATUS_PENDENTE;
-                
-                if ($agendamento->save()) {
-                    Yii::$app->session->setFlash('success', 'Agendamento solicitado com sucesso! A empresa entrará em contato para confirmação.');
-                    return $this->refresh();
-                } else {
-                    Yii::$app->session->setFlash('error', 'Erro ao salvar agendamento: ' . implode(', ', $agendamento->getFirstErrors()));
-                }
-            } else if (empty($agendamento_data)) {
-                Yii::$app->session->setFlash('error', 'Preencha todos os dados do agendamento.');
-            }
-        }
         
         return $this->render('area-publica', [
             'empresa' => $empresa,
@@ -318,8 +425,8 @@ class ClienteController extends Controller
                 $cliente->status = 1;
                 
                 if ($cliente->save()) {
-                    Yii::$app->session->setFlash('success', 'Cadastro realizado com sucesso na empresa ' . $empresa->nome . '! Você já pode fazer login.');
-                    return $this->redirect(['area-publica', 'empresa_id' => $empresa_id]);
+                    Yii::$app->session->setFlash('success', 'Cadastro realizado com sucesso na empresa ' . $empresa->nome . '! Faça login para acessar seu painel.');
+                    return $this->redirect(['login-cliente', 'empresa_id' => $empresa_id]);
                 } else {
                     $usuario->delete(); // Desfazer criação do usuário se cliente falhou
                 }
@@ -351,6 +458,7 @@ class ClienteController extends Controller
             }
             
             if ($user->isCliente()) {
+                // Cliente já logado vai sempre para seu painel
                 return $this->redirect(['index']);
             }
             
@@ -361,10 +469,7 @@ class ClienteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             // Verificar se é cliente
             if (Yii::$app->user->identity->isCliente()) {
-                // Redirecionar para área pública da empresa se especificada
-                if ($empresa_id) {
-                    return $this->redirect(['area-publica', 'empresa_id' => $empresa_id]);
-                }
+                // Sempre redirecionar para o painel do cliente após login
                 return $this->redirect(['index']);
             } else {
                 Yii::$app->session->setFlash('error', 'Acesso restrito para clientes.');

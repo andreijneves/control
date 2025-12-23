@@ -46,6 +46,22 @@ class EmpresaController extends Controller
     public function actionIndex()
     {
         $empresa_id = Yii::$app->user->identity->empresa_id;
+        
+        // Verificar se foi passada uma semana específica via GET
+        $semanaParam = Yii::$app->request->get('week');
+        if ($semanaParam) {
+            $inicioSemana = date('Y-m-d', strtotime('monday', strtotime($semanaParam)));
+        } else {
+            $inicioSemana = date('Y-m-d', strtotime('monday this week'));
+        }
+        $fimSemana = date('Y-m-d', strtotime('sunday', strtotime($inicioSemana)));
+        
+        $agendamentosSemana = Agendamento::find()
+            ->where(['empresa_id' => $empresa_id, 'status' => Agendamento::STATUS_CONFIRMADO])
+            ->andWhere(['between', 'DATE(data_agendamento)', $inicioSemana, $fimSemana])
+            ->with(['cliente', 'funcionario', 'servico'])
+            ->orderBy('data_agendamento ASC')
+            ->all();
 
         return $this->render('index', [
             'empresa_id' => $empresa_id,
@@ -53,7 +69,50 @@ class EmpresaController extends Controller
             'totalFuncionarios' => Funcionario::find()->where(['empresa_id' => $empresa_id])->count(),
             'totalClientes' => Cliente::find()->where(['empresa_id' => $empresa_id])->count(),
             'totalAgendamentos' => Agendamento::find()->where(['empresa_id' => $empresa_id])->count(),
+            'agendamentosSemana' => $agendamentosSemana,
+            'inicioSemana' => $inicioSemana,
+            'fimSemana' => $fimSemana,
         ]);
+    }
+    
+    public function actionCalendarioSemanal($week = null)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $empresa_id = Yii::$app->user->identity->empresa_id;
+        
+        if ($week) {
+            $inicioSemana = date('Y-m-d', strtotime($week));
+        } else {
+            $inicioSemana = date('Y-m-d', strtotime('monday this week'));
+        }
+        
+        $fimSemana = date('Y-m-d', strtotime($inicioSemana . ' +6 days'));
+        
+        $agendamentos = Agendamento::find()
+            ->where(['empresa_id' => $empresa_id, 'status' => Agendamento::STATUS_CONFIRMADO])
+            ->andWhere(['between', 'DATE(data_agendamento)', $inicioSemana, $fimSemana])
+            ->with(['cliente', 'funcionario', 'servico'])
+            ->orderBy('data_agendamento ASC')
+            ->all();
+            
+        $eventos = [];
+        foreach ($agendamentos as $agendamento) {
+            $eventos[] = [
+                'id' => $agendamento->id,
+                'title' => $agendamento->cliente->nome . ' - ' . $agendamento->servico->nome,
+                'start' => $agendamento->data_agendamento,
+                'funcionario' => $agendamento->funcionario->nome,
+                'cliente' => $agendamento->cliente->nome,
+                'servico' => $agendamento->servico->nome,
+                'observacoes' => $agendamento->observacoes,
+            ];
+        }
+        
+        return [
+            'eventos' => $eventos,
+            'inicioSemana' => $inicioSemana,
+            'fimSemana' => $fimSemana,
+        ];
     }
 
     // SERVIÇOS
@@ -266,14 +325,74 @@ class EmpresaController extends Controller
     public function actionAgendamentos()
     {
         $empresa_id = Yii::$app->user->identity->empresa_id;
-        $dataProvider = new ActiveDataProvider([
-            'query' => Agendamento::find()->where(['empresa_id' => $empresa_id]),
-            'pagination' => ['pageSize' => 20],
-        ]);
+        $tipoView = Yii::$app->request->get('view', 'calendario'); // padrão: calendário
+        
+        if ($tipoView === 'lista') {
+            // Visualização em lista (GridView original)
+            $dataProvider = new ActiveDataProvider([
+                'query' => Agendamento::find()->where(['empresa_id' => $empresa_id])->with(['cliente', 'funcionario', 'servico']),
+                'pagination' => ['pageSize' => 20],
+                'sort' => [
+                    'defaultOrder' => ['data_agendamento' => SORT_DESC]
+                ]
+            ]);
 
-        return $this->render('agendamentos', [
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('agendamentos', [
+                'dataProvider' => $dataProvider,
+                'tipoView' => $tipoView,
+            ]);
+        } else {
+            // Visualização em calendário
+            // Verificar se foi passada uma semana específica via GET
+            $semanaParam = Yii::$app->request->get('week');
+            if ($semanaParam) {
+                $inicioSemana = date('Y-m-d', strtotime('monday', strtotime($semanaParam)));
+            } else {
+                $inicioSemana = date('Y-m-d', strtotime('monday this week'));
+            }
+            $fimSemana = date('Y-m-d', strtotime('sunday', strtotime($inicioSemana)));
+            
+            // Buscar TODOS os agendamentos da semana (não apenas confirmados)
+            $agendamentosSemana = Agendamento::find()
+                ->where(['empresa_id' => $empresa_id])
+                ->andWhere(['between', 'DATE(data_agendamento)', $inicioSemana, $fimSemana])
+                ->with(['cliente', 'funcionario', 'servico'])
+                ->orderBy('data_agendamento ASC')
+                ->all();
+                
+            // Estatísticas da semana
+            $estatisticas = [
+                'pendentes' => 0,
+                'confirmados' => 0,
+                'cancelados' => 0,
+                'concluidos' => 0,
+            ];
+            
+            foreach ($agendamentosSemana as $agendamento) {
+                switch($agendamento->status) {
+                    case Agendamento::STATUS_PENDENTE:
+                        $estatisticas['pendentes']++;
+                        break;
+                    case Agendamento::STATUS_CONFIRMADO:
+                        $estatisticas['confirmados']++;
+                        break;
+                    case Agendamento::STATUS_CANCELADO:
+                        $estatisticas['cancelados']++;
+                        break;
+                    case Agendamento::STATUS_CONCLUIDO:
+                        $estatisticas['concluidos']++;
+                        break;
+                }
+            }
+
+            return $this->render('agendamentos', [
+                'agendamentosSemana' => $agendamentosSemana,
+                'inicioSemana' => $inicioSemana,
+                'fimSemana' => $fimSemana,
+                'estatisticas' => $estatisticas,
+                'tipoView' => $tipoView,
+            ]);
+        }
     }
 
     public function actionConfirmarAgendamento($id)
@@ -287,7 +406,15 @@ class EmpresaController extends Controller
             Yii::$app->session->setFlash('success', 'Agendamento confirmado!');
         }
 
-        return $this->redirect(['agendamentos']);
+        // Preservar parâmetros de navegação
+        $week = Yii::$app->request->get('week');
+        $view = Yii::$app->request->get('view', 'calendario');
+        $params = ['agendamentos', 'view' => $view];
+        if ($week && $view === 'calendario') {
+            $params['week'] = $week;
+        }
+        
+        return $this->redirect($params);
     }
 
     public function actionCancelarAgendamento($id)
@@ -298,7 +425,16 @@ class EmpresaController extends Controller
         $model->status = Agendamento::STATUS_CANCELADO;
         $model->save();
         Yii::$app->session->setFlash('success', 'Agendamento cancelado!');
-        return $this->redirect(['agendamentos']);
+        
+        // Preservar parâmetros de navegação
+        $week = Yii::$app->request->get('week');
+        $view = Yii::$app->request->get('view', 'calendario');
+        $params = ['agendamentos', 'view' => $view];
+        if ($week && $view === 'calendario') {
+            $params['week'] = $week;
+        }
+        
+        return $this->redirect($params);
     }
 
     /**

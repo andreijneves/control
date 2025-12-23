@@ -141,211 +141,144 @@ $this->params['breadcrumbs'][] = $empresa->nome;
             </div>
         </div>
 
-        <!-- Coluna 2: Formulário de agendamento -->
+        <!-- Coluna 2: Sistema de Login -->
         <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">
-                        <i class="fas fa-calendar-plus"></i>
-                        <?php if (Yii::$app->user->isGuest): ?>
-                            Cadastre-se e Agende seu Serviço
-                        <?php else: ?>
-                            Agendar Serviço
-                        <?php endif; ?>
-                    </h5>
+            <?php if (Yii::$app->user->isGuest): ?>
+                <!-- Formulário de Login -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Área do Cliente
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Coluna Login -->
+                            <div class="col-md-6">
+                                <h6 class="text-primary border-bottom pb-2 mb-3">
+                                    <i class="fas fa-user"></i> Já sou cliente
+                                </h6>
+                                
+                                <p class="text-muted small mb-3">Entre com seus dados de acesso:</p>
+                                
+                                <div class="text-center">
+                                    <?= Html::a(
+                                        '<i class="fas fa-sign-in-alt"></i> Fazer Login',
+                                        ['/cliente/login-cliente', 'empresa_id' => $empresa->id],
+                                        ['class' => 'btn btn-primary btn-lg w-100 mb-3']
+                                    ) ?>
+                                </div>
+                                
+                                <p class="text-center small text-muted">
+                                    Acesse sua conta para ver seus agendamentos<br>
+                                    e solicitar novos serviços.
+                                </p>
+                            </div>
+                            
+                            <!-- Coluna Cadastro -->
+                            <div class="col-md-6">
+                                <h6 class="text-success border-bottom pb-2 mb-3">
+                                    <i class="fas fa-user-plus"></i> Primeira vez aqui?
+                                </h6>
+                                
+                                <p class="text-muted small mb-3">Crie sua conta na empresa:</p>
+                                
+                                <div class="text-center">
+                                    <?= Html::a(
+                                        '<i class="fas fa-user-plus"></i> Criar Conta',
+                                        ['/cliente/cadastro', 'empresa_id' => $empresa->id],
+                                        ['class' => 'btn btn-success btn-lg w-100 mb-3']
+                                    ) ?>
+                                </div>
+                                
+                                <p class="text-center small text-muted">
+                                    Cadastre-se gratuitamente para<br>
+                                    agendar nossos serviços online.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php else: ?>
+                <!-- Cliente logado -->
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-user-check"></i>
+                            Bem-vindo, <?= Html::encode(Yii::$app->user->identity->nome_completo) ?>!
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info text-center">
+                            <i class="fas fa-info-circle fa-2x mb-3"></i>
+                            <h5>Você está logado como cliente</h5>
+                            <p class="mb-3">Acesse suas opções através dos links abaixo:</p>
+                            
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <?= Html::a(
+                                        '<i class="fas fa-tachometer-alt fa-2x mb-2"></i><br><strong>Meu Painel</strong><br><small>Informações da empresa</small>',
+                                        ['/cliente/index'],
+                                        ['class' => 'btn btn-outline-primary w-100 h-100']
+                                    ) ?>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <?= Html::a(
+                                        '<i class="fas fa-calendar-alt fa-2x mb-2"></i><br><strong>Meus Agendamentos</strong><br><small>Ver histórico e agendar</small>',
+                                        ['/cliente/agendamentos'],
+                                        ['class' => 'btn btn-outline-success w-100 h-100']
+                                    ) ?>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <?= Html::a(
+                                        '<i class="fas fa-sign-out-alt fa-2x mb-2"></i><br><strong>Sair</strong><br><small>Logout da conta</small>',
+                                        ['/site/logout'],
+                                        [
+                                            'class' => 'btn btn-outline-danger w-100 h-100',
+                                            'data-method' => 'post',
+                                            'data-confirm' => 'Deseja realmente sair?'
+                                        ]
+                                    ) ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+            
+            <!-- Informações adicionais -->
+            <div class="card mt-4">
+                <div class="card-header bg-info text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-info-circle"></i>
+                        Como funciona?
+                    </h6>
                 </div>
                 <div class="card-body">
-                    <?php if (empty($servicos)): ?>
-                        <div class="alert alert-warning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            Esta empresa ainda não possui serviços cadastrados.
+                    <div class="row text-center">
+                        <div class="col-md-3 mb-3">
+                            <i class="fas fa-user-plus fa-2x text-primary mb-2"></i>
+                            <h6>1. Cadastro</h6>
+                            <small class="text-muted">Crie sua conta gratuitamente</small>
                         </div>
-                    <?php else: ?>
-                        <?php $form = ActiveForm::begin(['id' => 'form-agendamento']); ?>
-                        
-                        <?php if (Yii::$app->user->isGuest): ?>
-                            <!-- Cadastro rápido -->
-                            <h6 class="text-primary border-bottom pb-2 mb-3">
-                                <i class="fas fa-user-plus"></i> Seus Dados
-                            </h6>
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label class="form-label">Nome Completo *</label>
-                                        <input type="text" name="Cliente[nome]" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label class="form-label">E-mail *</label>
-                                        <input type="email" name="Cliente[email]" class="form-control" required>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label class="form-label">Telefone *</label>
-                                        <input type="tel" name="Cliente[telefone]" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label class="form-label">Senha *</label>
-                                        <input type="password" name="Cliente[senha]" class="form-control" required minlength="6">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <hr class="my-4">
-                        <?php endif; ?>
-                        
-                        <!-- Agendamento -->
-                        <h6 class="text-success border-bottom pb-2 mb-3">
-                            <i class="fas fa-calendar"></i> Dados do Agendamento
-                        </h6>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Serviço *</label>
-                                    <select name="Agendamento[servico_id]" class="form-control" required>
-                                        <option value="">Escolha um serviço</option>
-                                        <?php foreach ($servicos as $servico): ?>
-                                            <option value="<?= $servico->id ?>">
-                                                <?= Html::encode($servico->nome) ?> - R$ <?= number_format($servico->preco, 2, ',', '.') ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Profissional *</label>
-                                    <select name="Agendamento[funcionario_id]" class="form-control" required>
-                                        <option value="">Escolha um profissional</option>
-                                        <?php foreach ($funcionarios as $funcionario): ?>
-                                            <option value="<?= $funcionario->id ?>">
-                                                <?= Html::encode($funcionario->nome) ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="fas fa-sign-in-alt fa-2x text-success mb-2"></i>
+                            <h6>2. Login</h6>
+                            <small class="text-muted">Acesse sua área pessoal</small>
                         </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Data *</label>
-                                    <input type="date" 
-                                           name="Agendamento[data_agendamento]" 
-                                           class="form-control" 
-                                           required
-                                           min="<?= date('Y-m-d') ?>">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group mb-3">
-                                    <label class="form-label">Horário *</label>
-                                    <input type="time" 
-                                           name="Agendamento[horario]" 
-                                           class="form-control" 
-                                           required>
-                                </div>
-                            </div>
+                        <div class="col-md-3 mb-3">
+                            <i class="fas fa-calendar-plus fa-2x text-warning mb-2"></i>
+                            <h6>3. Agende</h6>
+                            <small class="text-muted">Escolha serviço e horário</small>
                         </div>
-                        
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-success btn-lg px-5">
-                                <i class="fas fa-calendar-check"></i>
-                                <?php if (Yii::$app->user->isGuest): ?>
-                                    Cadastrar e Agendar
-                                <?php else: ?>
-                                    Confirmar Agendamento
-                                <?php endif; ?>
-                            </button>
+                        <div class="col-md-3 mb-3">
+                            <i class="fas fa-check-circle fa-2x text-info mb-2"></i>
+                            <h6>4. Confirmação</h6>
+                            <small class="text-muted">Receba a confirmação</small>
                         </div>
-                        
-                        <?php if (Yii::$app->user->isGuest): ?>
-                            <div class="text-center mt-3">
-                                <small class="text-muted">
-                                    Já tem conta na empresa <?= Html::encode($empresa->nome) ?>? 
-                                    <?= Html::a('Faça login aqui', ['/cliente/login-cliente', 'empresa_id' => $empresa->id], ['class' => 'fw-bold']) ?>
-                                </small>
-                            </div>
-                        <?php endif; ?>
-                        
-                        <!-- Link sempre visível para área de login -->
-                        <div class="text-center mt-4">
-                            <div class="border-top pt-3">
-                                <?= Html::a(
-                                    '<i class="fas fa-sign-in-alt"></i> Área de Login de Clientes', 
-                                    ['/cliente/login-cliente', 'empresa_id' => $empresa->id], 
-                                    ['class' => 'btn btn-outline-primary btn-sm']
-                                ) ?>
-                                <br>
-                                <small class="text-muted">Já é cliente? Acesse sua conta aqui</small>
-                            </div>
-                        </div>
-                        
-                        <?php ActiveForm::end(); ?>
-                    <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('form-agendamento');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            let isValid = true;
-            const required = form.querySelectorAll('[required]');
-            
-            required.forEach(function(field) {
-                if (!field.value.trim()) {
-                    field.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    field.classList.remove('is-invalid');
-                }
-            });
-            
-            if (!isValid) {
-                e.preventDefault();
-                alert('Por favor, preencha todos os campos obrigatórios.');
-            }
-        });
-    }
-});
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('form-agendamento');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            const dataInput = form.querySelector('input[name="Agendamento[data_agendamento]"]');
-            const horarioInput = form.querySelector('input[name="Agendamento[horario]"]');
-            
-            if (dataInput && horarioInput && dataInput.value && horarioInput.value) {
-                // Criar campo hidden com data e horário combinados
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = 'Agendamento[data_agendamento]';
-                hiddenInput.value = dataInput.value + ' ' + horarioInput.value + ':00';
-                form.appendChild(hiddenInput);
-                
-                // Desabilitar campos originais para não conflitar
-                dataInput.disabled = true;
-                horarioInput.disabled = true;
-            }
-        });
-    }
-});
-</script>

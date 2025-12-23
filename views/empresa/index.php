@@ -48,3 +48,14 @@ $this->title = 'Painel da Empresa';
         </div>
     </div>
 </div>
+
+<!-- Calendário Semanal -->
+<div class="row mt-5">
+    <div class="col-12">
+        <?= $this->render('_calendario_semanal', [
+            'agendamentosSemana' => $agendamentosSemana,
+            'inicioSemana' => $inicioSemana,
+            'fimSemana' => $fimSemana,
+        ]) ?>
+    </div>
+</div>

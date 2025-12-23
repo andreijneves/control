@@ -101,7 +101,17 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        // Verificar se deve redirecionar para área pública de empresa específica
+        $redirectTo = Yii::$app->request->get('redirect_to');
+        $empresaId = Yii::$app->request->get('empresa_id');
+        
         Yii::$app->user->logout();
+        
+        // Se foi solicitado redirecionamento para área pública da empresa
+        if ($redirectTo === 'area-publica' && $empresaId) {
+            return $this->redirect(['/cliente/area-publica', 'empresa_id' => $empresaId]);
+        }
+        
         return $this->goHome();
     }
 
