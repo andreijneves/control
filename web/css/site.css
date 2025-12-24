@@ -436,15 +436,15 @@ a.desc:after {
 
 /* Área específicas por tipo de usuário */
 .cliente-area {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #ffffff;
 }
 
 .empresa-area {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background: #ffffff;
 }
 
 .admin-area {
-    background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
+    background: #ffffff;
 }
 
 /* Navegação específica para áreas */
@@ -458,4 +458,9 @@ a.desc:after {
 
 .admin-area #header .navbar {
     background: rgba(252, 70, 107, 0.95) !important;
+}
+
+/* Redução de 10% no tamanho das fontes da área admin */
+.admin-area {
+    font-size: 0.9em;
 }

@@ -78,6 +78,7 @@ if (!Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'Dashboard', 'url' => ['/admin/index']];
             $menuItems[] = ['label' => 'Empresas', 'url' => ['/admin/empresas']];
             $menuItems[] = ['label' => 'Usuários', 'url' => ['/admin/usuarios']];
+            $menuItems[] = ['label' => 'Logout (' . Html::encode($user->nome_completo ?: $user->username) . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
         } elseif ($user->isAdminEmpresa()) {
             $menuItems[] = ['label' => 'Dashboard', 'url' => ['/empresa/index']];
             $menuItems[] = ['label' => 'Serviços', 'url' => ['/empresa/servicos']];

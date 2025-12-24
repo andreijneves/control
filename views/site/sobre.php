@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="text-center my-5">
         <h3 class="text-white mb-4">🤝 Pronto para Começar?</h3>
         <p class="text-white opacity-75 mb-4">
-            Junte-se a centenas de empresas que já escolheram o Control
+            Experimente nosso sistema e transforme a gestão do seu negócio
         </p>
         <?= Html::a('<span>🚀 Cadastrar Minha Empresa</span>', ['/site/cadastro-empresa'], [
             'class' => 'btn btn-primary-modern btn-modern btn-lg'
