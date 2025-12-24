@@ -976,3 +976,296 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1766517604.1908
     'REQUEST_TIME' => 1766517604
 ]
+2025-12-23 22:48:29 [::1][14][p4ldsoj5tlc4glm0iootjbt4i7][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "logout". in /var/www/html/control/vendor/yiisoft/yii2/base/Module.php:564
+Stack trace:
+#0 /var/www/html/control/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction()
+#1 /var/www/html/control/vendor/yiisoft/yii2/base/Application.php(387): yii\web\Application->handleRequest()
+#2 /var/www/html/control/web/index.php(12): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /var/www/html/control/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /var/www/html/control/vendor/yiisoft/yii2/base/Application.php(387): yii\web\Application->handleRequest()
+#1 /var/www/html/control/web/index.php(12): yii\base\Application->run()
+#2 {main}
+2025-12-23 22:48:29 [::1][14][p4ldsoj5tlc4glm0iootjbt4i7][info][application] $_GET = [
+    'r' => 'logout'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity' => 'db7e583b7759d2a477a6929c63095aa0e48d52925ecd1aba278529c15a9d26b3a:2:{i:0;s:9:\"_identity\";i:1;s:47:\"[14,\"DGbTOM0IZrCcZqbdWwZijHTq1109FTW5\",2592000]\";}'
+    'PHPSESSID' => 'p4ldsoj5tlc4glm0iootjbt4i7'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 14
+    '__authKey' => 'DGbTOM0IZrCcZqbdWwZijHTq1109FTW5'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => '_identity=db7e583b7759d2a477a6929c63095aa0e48d52925ecd1aba278529c15a9d26b3a%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A47%3A%22%5B14%2C%22DGbTOM0IZrCcZqbdWwZijHTq1109FTW5%22%2C2592000%5D%22%3B%7D; PHPSESSID=p4ldsoj5tlc4glm0iootjbt4i7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.58 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/control/web/index.php'
+    'REMOTE_PORT' => '51932'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=logout'
+    'REQUEST_URI' => '/control/web/index.php?r=logout'
+    'SCRIPT_NAME' => '/control/web/index.php'
+    'PHP_SELF' => '/control/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1766530109.0001
+    'REQUEST_TIME' => 1766530109
+]
+2025-12-23 22:48:45 [::1][14][p4ldsoj5tlc4glm0iootjbt4i7][error][yii\web\HttpException:405] yii\web\MethodNotAllowedHttpException: Method Not Allowed. This URL can only handle the following request methods: POST. in /var/www/html/control/vendor/yiisoft/yii2/filters/VerbFilter.php:108
+Stack trace:
+#0 [internal function]: yii\filters\VerbFilter->beforeAction()
+#1 /var/www/html/control/vendor/yiisoft/yii2/base/Component.php(648): call_user_func()
+#2 /var/www/html/control/vendor/yiisoft/yii2/base/Controller.php(303): yii\base\Component->trigger()
+#3 /var/www/html/control/vendor/yiisoft/yii2/web/Controller.php(318): yii\base\Controller->beforeAction()
+#4 /var/www/html/control/controllers/SiteController.php(24): yii\web\Controller->beforeAction()
+#5 /var/www/html/control/vendor/yiisoft/yii2/base/Controller.php(182): app\controllers\SiteController->beforeAction()
+#6 /var/www/html/control/vendor/yiisoft/yii2/base/Module.php(555): yii\base\Controller->runAction()
+#7 /var/www/html/control/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction()
+#8 /var/www/html/control/vendor/yiisoft/yii2/base/Application.php(387): yii\web\Application->handleRequest()
+#9 /var/www/html/control/web/index.php(12): yii\base\Application->run()
+#10 {main}
+2025-12-23 22:48:45 [::1][14][p4ldsoj5tlc4glm0iootjbt4i7][info][application] $_GET = [
+    'r' => 'site/logout'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity' => 'db7e583b7759d2a477a6929c63095aa0e48d52925ecd1aba278529c15a9d26b3a:2:{i:0;s:9:\"_identity\";i:1;s:47:\"[14,\"DGbTOM0IZrCcZqbdWwZijHTq1109FTW5\",2592000]\";}'
+    'PHPSESSID' => 'p4ldsoj5tlc4glm0iootjbt4i7'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 14
+    '__authKey' => 'DGbTOM0IZrCcZqbdWwZijHTq1109FTW5'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => '_identity=db7e583b7759d2a477a6929c63095aa0e48d52925ecd1aba278529c15a9d26b3a%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A47%3A%22%5B14%2C%22DGbTOM0IZrCcZqbdWwZijHTq1109FTW5%22%2C2592000%5D%22%3B%7D; PHPSESSID=p4ldsoj5tlc4glm0iootjbt4i7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.58 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/control/web/index.php'
+    'REMOTE_PORT' => '45044'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=site/logout'
+    'REQUEST_URI' => '/control/web/index.php?r=site/logout'
+    'SCRIPT_NAME' => '/control/web/index.php'
+    'PHP_SELF' => '/control/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1766530125.7814
+    'REQUEST_TIME' => 1766530125
+]
+2025-12-23 22:49:10 [::1][14][p4ldsoj5tlc4glm0iootjbt4i7][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: empresa/logout in /var/www/html/control/vendor/yiisoft/yii2/base/Controller.php:155
+Stack trace:
+#0 /var/www/html/control/vendor/yiisoft/yii2/base/Module.php(555): yii\base\Controller->runAction()
+#1 /var/www/html/control/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction()
+#2 /var/www/html/control/vendor/yiisoft/yii2/base/Application.php(387): yii\web\Application->handleRequest()
+#3 /var/www/html/control/web/index.php(12): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /var/www/html/control/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /var/www/html/control/vendor/yiisoft/yii2/base/Application.php(387): yii\web\Application->handleRequest()
+#1 /var/www/html/control/web/index.php(12): yii\base\Application->run()
+#2 {main}
+2025-12-23 22:49:10 [::1][14][p4ldsoj5tlc4glm0iootjbt4i7][info][application] $_GET = [
+    'r' => 'empresa/logout'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity' => 'db7e583b7759d2a477a6929c63095aa0e48d52925ecd1aba278529c15a9d26b3a:2:{i:0;s:9:\"_identity\";i:1;s:47:\"[14,\"DGbTOM0IZrCcZqbdWwZijHTq1109FTW5\",2592000]\";}'
+    'PHPSESSID' => 'p4ldsoj5tlc4glm0iootjbt4i7'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 14
+    '__authKey' => 'DGbTOM0IZrCcZqbdWwZijHTq1109FTW5'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => '_identity=db7e583b7759d2a477a6929c63095aa0e48d52925ecd1aba278529c15a9d26b3a%3A2%3A%7Bi%3A0%3Bs%3A9%3A%22_identity%22%3Bi%3A1%3Bs%3A47%3A%22%5B14%2C%22DGbTOM0IZrCcZqbdWwZijHTq1109FTW5%22%2C2592000%5D%22%3B%7D; PHPSESSID=p4ldsoj5tlc4glm0iootjbt4i7'
+    'PATH' => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.58 (Ubuntu) Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.58 (Ubuntu)'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/var/www/html'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/var/www/html'
+    'SERVER_ADMIN' => 'webmaster@localhost'
+    'SCRIPT_FILENAME' => '/var/www/html/control/web/index.php'
+    'REMOTE_PORT' => '60344'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'r=empresa/logout'
+    'REQUEST_URI' => '/control/web/index.php?r=empresa/logout'
+    'SCRIPT_NAME' => '/control/web/index.php'
+    'PHP_SELF' => '/control/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1766530150.5973
+    'REQUEST_TIME' => 1766530150
+]
+2025-12-24 15:29:10 [127.0.0.1][-][-][error][yii\base\ErrorException:2] yii\base\ErrorException: session_start(): open(/var/www/html/control/runtime/session/sess_nbo7rltp06971f3sgld3sq2l0o, O_RDWR) failed: Permission denied (13) in /var/www/html/control/vendor/yiisoft/yii2/web/Session.php:152
+Stack trace:
+#0 [internal function]: yii\base\ErrorHandler->handleError()
+#1 /var/www/html/control/vendor/yiisoft/yii2/web/Session.php(152): session_start()
+#2 /var/www/html/control/vendor/yiisoft/yii2/web/Session.php(701): yii\web\Session->open()
+#3 /var/www/html/control/vendor/yiisoft/yii2/web/User.php(722): yii\web\Session->get()
+#4 /var/www/html/control/vendor/yiisoft/yii2/web/User.php(207): yii\web\User->renewAuthStatus()
+#5 /var/www/html/control/vendor/yiisoft/yii2/web/User.php(385): yii\web\User->getIdentity()
+#6 /var/www/html/control/vendor/yiisoft/yii2/base/Component.php(139): yii\web\User->getIsGuest()
+#7 /var/www/html/control/vendor/yiisoft/yii2-debug/src/panels/UserPanel.php(84): yii\base\Component->__get()
+#8 /var/www/html/control/vendor/yiisoft/yii2/base/BaseObject.php(112): yii\debug\panels\UserPanel->init()
+#9 [internal function]: yii\base\BaseObject->__construct()
+#10 /var/www/html/control/vendor/yiisoft/yii2/di/Container.php(425): ReflectionClass->newInstanceArgs()
+#11 /var/www/html/control/vendor/yiisoft/yii2/di/Container.php(176): yii\di\Container->build()
+#12 /var/www/html/control/vendor/yiisoft/yii2/BaseYii.php(374): yii\di\Container->get()
+#13 /var/www/html/control/vendor/yiisoft/yii2-debug/src/Module.php(265): yii\BaseYii::createObject()
+#14 /var/www/html/control/vendor/yiisoft/yii2-debug/src/Module.php(237): yii\debug\Module->initPanels()
+#15 /var/www/html/control/vendor/yiisoft/yii2/base/BaseObject.php(112): yii\debug\Module->init()
+#16 /var/www/html/control/vendor/yiisoft/yii2/base/Module.php(164): yii\base\BaseObject->__construct()
+#17 [internal function]: yii\base\Module->__construct()
+#18 /var/www/html/control/vendor/yiisoft/yii2/di/Container.php(417): ReflectionClass->newInstanceArgs()
+#19 /var/www/html/control/vendor/yiisoft/yii2/di/Container.php(176): yii\di\Container->build()
+#20 /var/www/html/control/vendor/yiisoft/yii2/BaseYii.php(374): yii\di\Container->get()
+#21 /var/www/html/control/vendor/yiisoft/yii2/base/Module.php(448): yii\BaseYii::createObject()
+#22 /var/www/html/control/vendor/yiisoft/yii2/base/Application.php(316): yii\base\Module->getModule()
+#23 /var/www/html/control/vendor/yiisoft/yii2/web/Application.php(69): yii\base\Application->bootstrap()
+#24 /var/www/html/control/vendor/yiisoft/yii2/base/Application.php(274): yii\web\Application->bootstrap()
+#25 /var/www/html/control/vendor/yiisoft/yii2/base/BaseObject.php(112): yii\base\Application->init()
+#26 /var/www/html/control/vendor/yiisoft/yii2/base/Application.php(207): yii\base\BaseObject->__construct()
+#27 /var/www/html/control/web/index.php(12): yii\base\Application->__construct()
+#28 {main}
+2025-12-24 15:29:09 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf' => '660ddc7a0e4c61d10ec4e716e04312ec2538869b048f9d6bfd24675f17514737a:2:{i:0;s:5:\"_csrf\";i:1;s:32:\"8StvxlLJ9dgrptGs_PHxsAE5Fz_6fyV2\";}'
+    'PHPSESSID' => 'nbo7rltp06971f3sgld3sq2l0o'
+]
+
+$_SESSION = []
+
+$_SERVER = [
+    'DOCUMENT_ROOT' => '/var/www/html/control/web'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'REMOTE_PORT' => '49942'
+    'SERVER_SOFTWARE' => 'PHP/8.3.6 (Development Server)'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_PORT' => '8080'
+    'REQUEST_URI' => '/'
+    'REQUEST_METHOD' => 'GET'
+    'SCRIPT_NAME' => '/index.php'
+    'SCRIPT_FILENAME' => '/var/www/html/control/web/index.php'
+    'PHP_SELF' => '/index.php'
+    'HTTP_HOST' => 'localhost:8080'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Linux\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => '_csrf=660ddc7a0e4c61d10ec4e716e04312ec2538869b048f9d6bfd24675f17514737a%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%228StvxlLJ9dgrptGs_PHxsAE5Fz_6fyV2%22%3B%7D; PHPSESSID=nbo7rltp06971f3sgld3sq2l0o'
+    'REQUEST_TIME_FLOAT' => 1766590149.1845
+    'REQUEST_TIME' => 1766590149
+]

@@ -1,17 +1,364 @@
+/* ================================
+   DESIGN MODERNO E RESPONSIVO
+   ================================ */
+
+/* Importação de fontes modernas */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Reset e configurações globais */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* Container principal com padding ajustado */
 main > .container {
-    padding: 70px 15px 20px;
+    padding: 90px 15px 40px;
+    position: relative;
 }
 
-.footer {
-    background-color: #f5f5f5;
-    font-size: .9em;
-    height: 60px;
+/* ================================
+   HEADER E NAVEGAÇÃO
+   ================================ */
+
+#header .navbar {
+    backdrop-filter: blur(10px);
+    background: rgba(0,0,0,0.9) !important;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
 }
 
-.footer > .container {
-    padding-right: 15px;
-    padding-left: 15px;
+#header .navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #fff !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
+
+#header .nav-link {
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    margin: 0 5px;
+}
+
+#header .nav-link:hover {
+    transform: translateY(-2px);
+    color: #64b5f6 !important;
+}
+
+/* ================================
+   HERO SECTION
+   ================================ */
+
+.hero-section {
+    background: linear-gradient(135deg, 
+        rgba(102, 126, 234, 0.9) 0%, 
+        rgba(118, 75, 162, 0.9) 100%),
+        url('/web/images/hero-bg.jpg') center/cover;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    margin: -90px -15px 50px -15px;
+    border-radius: 0 0 50px 50px;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 50px 20px;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    animation: fadeInUp 1s ease;
+}
+
+.hero-content .lead {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    animation: fadeInUp 1s ease 0.2s both;
+}
+
+.hero-content .description {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease 0.4s both;
+}
+
+/* ================================
+   BOTÕES MODERNOS
+   ================================ */
+
+.btn-modern {
+    padding: 15px 30px;
+    border-radius: 50px;
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.btn-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.btn-modern::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.6s ease;
+    z-index: 0;
+}
+
+.btn-modern:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-modern span {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-primary-modern {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+}
+
+.btn-outline-modern {
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.8);
+    color: white;
+}
+
+.btn-outline-modern:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: white;
+    color: white;
+}
+
+/* ================================
+   CARDS MODERNOS
+   ================================ */
+
+.feature-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.feature-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.feature-card h5 {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.feature-card p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* ================================
+   SEÇÃO DE ESTATÍSTICAS
+   ================================ */
+
+.stats-section {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 4rem 0;
+    margin: 4rem -15px;
+    border-radius: 30px;
+}
+
+.stat-card {
+    text-align: center;
+    color: white;
+    padding: 2rem;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ================================
+   FOOTER MODERNO
+   ================================ */
+
+#footer {
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+    color: white;
+    padding: 3rem 0 2rem;
+    margin-top: 5rem;
+}
+
+#footer .container {
+    text-align: center;
+}
+
+#footer a {
+    color: #64b5f6;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#footer a:hover {
+    color: #90caf9;
+}
+
+/* ================================
+   ANIMAÇÕES
+   ================================ */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+/* ================================
+   RESPONSIVIDADE
+   ================================ */
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content .lead {
+        font-size: 1.2rem;
+    }
+    
+    .btn-modern {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+    }
+    
+    .feature-card {
+        margin-bottom: 2rem;
+    }
+    
+    .hero-section {
+        margin: -90px -15px 30px -15px;
+        min-height: 60vh;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content {
+        padding: 30px 15px;
+    }
+}
+
+/* ================================
+   ELEMENTOS ORIGINAIS MANTIDOS
+   ================================ */
 
 .not-set {
     color: #c55;
@@ -85,4 +432,30 @@ a.desc:after {
 
 .form-group {
     margin-bottom: 1rem;
+}
+
+/* Área específicas por tipo de usuário */
+.cliente-area {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.empresa-area {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.admin-area {
+    background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
+}
+
+/* Navegação específica para áreas */
+.cliente-area #header .navbar {
+    background: rgba(102, 126, 234, 0.95) !important;
+}
+
+.empresa-area #header .navbar {
+    background: rgba(17, 153, 142, 0.95) !important;
+}
+
+.admin-area #header .navbar {
+    background: rgba(252, 70, 107, 0.95) !important;
 }

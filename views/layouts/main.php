@@ -91,7 +91,9 @@ if (!Yii::$app->user->isGuest) {
                     '<div class="dropdown-divider"></div>',
                     ['label' => '📋 Configurações Gerais', 'url' => ['/empresa/configuracoes']],
                 ],
+                
             ];
+            $menuItems[] = ['label' => 'Logout (' . Html::encode($user->nome_completo ?: $user->username) . ')', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
         } elseif ($user->isCliente()) {
             $menuItems[] = ['label' => '🏠 Meu Painel', 'url' => ['/cliente/index']];
             $menuItems[] = ['label' => '📅 Meus Agendamentos', 'url' => ['/cliente/agendamentos']];
@@ -130,11 +132,67 @@ if (!Yii::$app->user->isGuest) {
     </div>
 </main>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
+<footer id="footer" class="mt-auto py-5">
     <div class="container">
-        <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <h5 class="text-white mb-3">🚀 Control</h5>
+                <p class="text-white opacity-75">
+                    Revolucionando a gestão de serviços com tecnologia moderna e design intuitivo. 
+                    Sua empresa merece o melhor!
+                </p>
+                <div class="d-flex">
+                    <a href="#" class="text-white me-3" style="font-size: 1.5rem;">📱</a>
+                    <a href="#" class="text-white me-3" style="font-size: 1.5rem;">📧</a>
+                    <a href="#" class="text-white me-3" style="font-size: 1.5rem;">🌐</a>
+                </div>
+            </div>
+            
+            <div class="col-lg-2 col-md-4 mb-4">
+                <h6 class="text-white mb-3">📋 Produto</h6>
+                <ul class="list-unstyled">
+                    <li><a href="<?= \yii\helpers\Url::to(['/site/index']) ?>" class="text-white opacity-75 text-decoration-none">Início</a></li>
+                    <li><a href="<?= \yii\helpers\Url::to(['/site/sobre']) ?>" class="text-white opacity-75 text-decoration-none">Sobre</a></li>
+                    <li><a href="<?= \yii\helpers\Url::to(['/site/cadastro-empresa']) ?>" class="text-white opacity-75 text-decoration-none">Cadastrar Empresa</a></li>
+                </ul>
+            </div>
+            
+            <div class="col-lg-2 col-md-4 mb-4">
+                <h6 class="text-white mb-3">🎯 Recursos</h6>
+                <ul class="list-unstyled">
+                    <li><span class="text-white opacity-75">Agendamentos</span></li>
+                    <li><span class="text-white opacity-75">Dashboard</span></li>
+                    <li><span class="text-white opacity-75">Relatórios</span></li>
+                    <li><span class="text-white opacity-75">API</span></li>
+                </ul>
+            </div>
+            
+            <div class="col-lg-2 col-md-4 mb-4">
+                <h6 class="text-white mb-3">🤝 Suporte</h6>
+                <ul class="list-unstyled">
+                    <li><a href="<?= \yii\helpers\Url::to(['/site/contato']) ?>" class="text-white opacity-75 text-decoration-none">Contato</a></li>
+                    <li><span class="text-white opacity-75">FAQ</span></li>
+                    <li><span class="text-white opacity-75">Documentação</span></li>
+                </ul>
+            </div>
+            
+            <div class="col-lg-2 mb-4">
+                <h6 class="text-white mb-3">📞 Contato</h6>
+                <p class="text-white opacity-75 mb-1">📧 contato@control.com</p>
+                <p class="text-white opacity-75 mb-1">📱 (11) 99999-9999</p>
+                <p class="text-white opacity-75">🕒 8h às 18h</p>
+            </div>
+        </div>
+        
+        <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+        
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <span class="text-white opacity-75">&copy; Control <?= date('Y') ?> - Todos os direitos reservados</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <span class="text-white opacity-75">Feito com ❤️ para sua empresa</span>
+            </div>
         </div>
     </div>
 </footer>
