@@ -30,10 +30,14 @@ sudo chown -R www-data:www-data web/assets/ runtime/
 sudo chmod -R 775 web/assets/ runtime/
 ```
 
-### 4️⃣ **Para Problemas de Permissão**
+### 4️⃣ **Corrigir Permissões (se necessário)**
 ```bash
-# Se há erro "Permission denied"
-sudo ./clear-cache.sh
+# Script automático para permissões
+./fix-permissions.sh
+
+# Ou comando direto
+sudo chown -R www-data:www-data web/assets/ runtime/
+sudo chmod -R 775 web/assets/ runtime/
 ```
 
 ## 🔄 **Fluxo Completo de Deploy**
@@ -95,6 +99,17 @@ touch web/css/site.css web/js/site-effects.js
 ```
 
 ## 🚨 **Troubleshooting Avançado**
+
+### **Erro: "Directory is not writable"**
+```bash
+# Solução rápida
+./fix-permissions.sh
+
+# Ou manual
+sudo chown -R www-data:www-data web/assets/ runtime/
+sudo chmod -R 775 web/assets/ runtime/
+sudo chmod g+s web/assets/ runtime/
+```
 
 ### **Assets regeneram mas são iguais**
 O Yii2 usa hash MD5 dos arquivos. Se o conteúdo não mudou, o hash será igual.

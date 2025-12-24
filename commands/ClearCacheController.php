@@ -90,7 +90,15 @@ class ClearCacheController extends Controller
     private function clearRuntimeCache()
     {
         try {
-            $runtimePath = Yii::getAlias('@runtime');
+            // Usar caminho absoluto baseado no projeto
+            $runtimePath = dirname(__DIR__) . '/runtime';
+            
+            if (!file_exists($runtimePath)) {
+                $this->stderr("Diretório runtime não encontrado: $runtimePath\n");
+                return false;
+            }
+            
+            $this->stdout("Limpando runtime em: $runtimePath\n");
             
             // Pastas para limpar
             $foldersToClean = [
@@ -100,9 +108,16 @@ class ClearCacheController extends Controller
             ];
             
             foreach ($foldersToClean as $folder) {
-                if (file_exists($folder)) {
-                    FileHelper::removeDirectory($folder);
-                    FileHelper::createDirectory($folder);
+                if (file_exists($folder) && is_dir($folder)) {
+                    // Limpar conteúdo mas manter a pasta
+                    $files = glob($folder . '/*');
+                    foreach ($files as $file) {
+                        if (is_dir($file)) {
+                            FileHelper::removeDirectory($file);
+                        } else {
+                            @unlink($file);
+                        }
+                    }
                 }
             }
             
@@ -119,18 +134,31 @@ class ClearCacheController extends Controller
     private function clearAssets()
     {
         try {
-            $assetsPath = Yii::getAlias('@webroot/assets');
+            // Usar caminho direto para assets
+            $assetsPath = dirname(__DIR__) . '/web/assets';
             
-            if (file_exists($assetsPath)) {
-                // Manter apenas o .gitignore
-                $files = glob($assetsPath . '/*');
-                foreach ($files as $file) {
-                    if (basename($file) !== '.gitignore') {
-                        if (is_dir($file)) {
-                            FileHelper::removeDirectory($file);
-                        } else {
-                            unlink($file);
-                        }
+            if (!file_exists($assetsPath)) {
+                $this->stderr("Diretório de assets não encontrado: $assetsPath\n");
+                return false;
+            }
+            
+            $this->stdout("Limpando assets em: $assetsPath\n");
+            
+            // Verificar permissões
+            if (!is_writable($assetsPath)) {
+                $this->stderr("⚠️  Diretório sem permissão de escrita: $assetsPath\n");
+                $this->stderr("Execute: ./fix-permissions.sh\n");
+                return false;
+            }
+            
+            // Manter apenas o .gitignore
+            $files = glob($assetsPath . '/*');
+            foreach ($files as $file) {
+                if (basename($file) !== '.gitignore') {
+                    if (is_dir($file)) {
+                        FileHelper::removeDirectory($file);
+                    } else {
+                        @unlink($file);
                     }
                 }
             }
@@ -148,11 +176,17 @@ class ClearCacheController extends Controller
     private function clearSessions()
     {
         try {
-            $sessionPath = Yii::getAlias('@runtime/session');
+            $sessionPath = dirname(__DIR__) . '/runtime/session';
             
-            if (file_exists($sessionPath)) {
-                FileHelper::removeDirectory($sessionPath);
-                FileHelper::createDirectory($sessionPath);
+            if (file_exists($sessionPath) && is_dir($sessionPath)) {
+                $this->stdout("Limpando sessões em: $sessionPath\n");
+                
+                $files = glob($sessionPath . '/*');
+                foreach ($files as $file) {
+                    if (is_file($file)) {
+                        @unlink($file);
+                    }
+                }
             }
             
             return true;
@@ -168,15 +202,17 @@ class ClearCacheController extends Controller
     private function clearOldLogs()
     {
         try {
-            $logsPath = Yii::getAlias('@runtime/logs');
+            $logsPath = dirname(__DIR__) . '/runtime/logs';
             
-            if (file_exists($logsPath)) {
+            if (file_exists($logsPath) && is_dir($logsPath)) {
+                $this->stdout("Limpando logs antigos em: $logsPath\n");
+                
                 $files = glob($logsPath . '/*.log');
                 $weekAgo = time() - (7 * 24 * 60 * 60);
                 
                 foreach ($files as $file) {
                     if (filemtime($file) < $weekAgo) {
-                        unlink($file);
+                        @unlink($file);
                     }
                 }
             }
