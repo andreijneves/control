@@ -3,17 +3,10 @@
 namespace tests\unit\models;
 
 use app\models\LoginForm;
-use app\models\User;
-use Yii;
 
 class LoginFormTest extends \Codeception\Test\Unit
 {
     private $model;
-
-    protected function _before()
-    {
-        $this->ensureUser('demo', 'demo', 101);
-    }
 
     protected function _after()
     {
@@ -55,21 +48,4 @@ class LoginFormTest extends \Codeception\Test\Unit
         verify($this->model->errors)->arrayHasNotKey('password');
     }
 
-    private function ensureUser(string $username, string $password, int $id): User
-    {
-        $user = User::findOne(['username' => $username]);
-        if ($user === null) {
-            $user = new User();
-            $user->id = $id;
-            $user->username = $username;
-            $user->setPassword($password);
-            $user->generateAuthKey();
-            $user->generateAccessToken();
-            $user->role = User::ROLE_USUARIO;
-            $user->status = 10;
-            $user->save(false);
-        }
-
-        return $user;
-    }
 }

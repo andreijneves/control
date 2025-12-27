@@ -7,26 +7,23 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
+use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\Organization;
-use app\models\Employee;
-use app\models\Service;
+use app\models\Empresa;
+use app\models\Usuario;
+use yii\helpers\Html;
 
 class SiteController extends Controller
 {
-    public function init()
+    public function beforeAction($action)
     {
-        parent::init();
-        
-        // Usa layout público para visitantes
-        if (Yii::$app->user->isGuest) {
-            $this->layout = 'public';
+        // Desabilitar CSRF para ações públicas ou de logout
+        if (in_array($action->id, ['contato', 'logout'])) {
+            $this->enableCsrfValidation = false;
         }
+        return parent::beforeAction($action);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -50,56 +47,37 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function actions()
     {
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
         ];
     }
 
     /**
-     * Exibe a página inicial.
-     *
-     * @return string
+     * Página inicial
      */
     public function actionIndex()
     {
         if (!Yii::$app->user->isGuest) {
             $user = Yii::$app->user->identity;
             
-            // Dashboard para Administrador Geral
-            if ($user->isAdmGeral()) {
-                return $this->render('admin-dashboard', [
-                    'totalOrganizations' => Organization::find()->count(),
-                    'totalEmployees' => Employee::find()->count(),
-                    'totalServices' => Service::find()->count(),
-                    'organizations' => Organization::find()->orderBy(['created_at' => SORT_DESC])->limit(10)->all(),
-                ]);
-            }
-            
-            // Dashboard para Administrador de Organização ou Funcionário
-            if (($user->isAdmOrg() || $user->isFuncionario()) && $user->organization_id) {
-                return $this->render('org-dashboard', [
-                    'organization' => $user->organization,
-                ]);
+            if ($user->isAdmin()) {
+                return $this->redirect(['admin/index']);
+            } elseif ($user->isAdminEmpresa()) {
+                return $this->redirect(['empresa/index']);
+            } elseif ($user->isCliente()) {
+                return $this->redirect(['cliente/index']);
             }
         }
+
         return $this->render('index');
     }
 
     /**
-     * Ação de login.
-     *
-     * @return Response|string
+     * Login
      */
     public function actionLogin()
     {
@@ -107,74 +85,102 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        return $this->redirect(['/auth/auth/login']);
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            return $this->goHome();
+        }
+
+        $model->password = '';
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Ação de logout.
-     *
-     * @return Response
+     * Logout
      */
     public function actionLogout()
     {
+        // Verificar se deve redirecionar para área pública de empresa específica
+        $redirectTo = Yii::$app->request->get('redirect_to');
+        $empresaId = Yii::$app->request->get('empresa_id');
+        
         Yii::$app->user->logout();
-
+        
+        // Se foi solicitado redirecionamento para área pública da empresa
+        if ($redirectTo === 'area-publica' && $empresaId) {
+            return $this->redirect(['/cliente/area-publica', 'empresa_id' => $empresaId]);
+        }
+        
         return $this->goHome();
     }
 
     /**
-     * Exibe a página de contato.
-     *
-     * @return Response|string
+     * Cadastro de empresa
      */
-    public function actionContact()
+    public function actionCadastroEmpresa()
+    {
+        $model = new Empresa();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // Criar usuário admin da empresa
+            $usuario = new Usuario();
+            $usuario->username = $model->email; // Username sempre igual ao email do formulário
+            $usuario->email = $model->email;
+            $usuario->setPassword(Yii::$app->request->post('senha'));
+            $usuario->generateAuthKey();
+            $usuario->role = Usuario::ROLE_ADMIN_EMPRESA;
+            $usuario->empresa_id = $model->id;
+            $usuario->nome_completo = Yii::$app->request->post('responsavel');
+            $usuario->status = 1;
+            
+            if ($usuario->save()) {
+                // Capturar a senha para mostrar no flash
+                $senhaTemporaria = Yii::$app->request->post('senha');
+                
+                // Flash com dados de acesso
+                Yii::$app->session->setFlash('success', 
+                    '<h5>🎉 Empresa cadastrada com sucesso!</h5>' .
+                    '<div class="alert alert-warning mt-3">' .
+                        '<strong>📋 DADOS DE ACESSO - ANOTE COM CUIDADO:</strong><br><br>' .
+                        '<strong>👤 Usuário:</strong> ' . Html::encode($usuario->username) . '<br>' .
+                        '<strong>🔑 Senha:</strong> ' . Html::encode($senhaTemporaria) . '<br>' .
+                        '<strong>📧 E-mail:</strong> ' . Html::encode($usuario->email) . '<br><br>' .
+                        '<small class="text-muted">⚠️ Guarde essas informações em local seguro! Você precisará delas para fazer login.</small>' .
+                    '</div>'
+                );
+                return $this->redirect(['login']);
+            } else {
+                $model->delete(); // Desfazer criação da empresa se usuário falhou
+                Yii::$app->session->setFlash('error', 'Erro ao criar usuário administrativo: ' . implode(', ', $usuario->getFirstErrors()));
+            }
+        }
+
+        return $this->render('cadastro-empresa', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Página de contato
+     */
+    public function actionContato()
     {
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
+            Yii::$app->session->setFlash('success', 'Obrigado pela sua mensagem. Entraremos em contato com você em breve.');
             return $this->refresh();
         }
-        return $this->render('contact', [
+        return $this->render('contato', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Exibe a página sobre.
-     *
-     * @return string
+     * Sobre
      */
-    public function actionAbout()
+    public function actionSobre()
     {
-        return $this->render('about');
-    }
-
-    /**
-     * Cadastro de nova organização.
-     *
-     * @return Response|string
-     */
-    public function actionRegister()
-    {
-        $model = new Organization();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $credentials = $model->getAdminCredentials();
-            
-            Yii::$app->session->setFlash('success', 
-                "Organização cadastrada com sucesso!<br><br>" .
-                "<strong>Credenciais do Administrador:</strong><br>" .
-                "Usuário: <strong>{$credentials['username']}</strong><br>" .
-                "Senha: <strong>{$credentials['password']}</strong><br><br>" .
-                "<em>Guarde estas informações em local seguro!</em>"
-            );
-
-            return $this->redirect(['/auth/auth/login']);
-        }
-
-        return $this->render('register', [
-            'model' => $model,
-        ]);
+        return $this->render('sobre');
     }
 }

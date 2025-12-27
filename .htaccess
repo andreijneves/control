@@ -1,0 +1,4 @@
+# Redirecionar tudo para a pasta web
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !^/(web|assets)/
+RewriteRule ^(.*)$ web/$1 [L]

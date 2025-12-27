@@ -4,39 +4,43 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'control',
+    'id' => 'basic',
     'name' => 'Control',
     'basePath' => dirname(__DIR__),
-    'language' => 'pt-BR',
-    'sourceLanguage' => 'en-US',
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'modules' => [
-        'auth' => [
-            'class' => \app\modules\auth\Module::class,
-        ],
-        'admin' => [
-            'class' => \app\modules\admin\Module::class,
-        ],
-        'organization' => [
-            'class' => \app\modules\organization\Module::class,
-        ],
-    ],
     'components' => [
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'a0ysBB0XhfCmWxw8qZiXPy0RB4LL-Ki7',
+            'cookieValidationKey' => hash('sha256', __DIR__ . __FILE__),
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
+        ],
+        'response' => [
+            'charset' => 'UTF-8',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'session' => [
+            'class' => 'yii\web\Session',
+            'savePath' => '@runtime/session',
+        ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Usuario',
             'enableAutoLogin' => true,
-            'loginUrl' => ['auth/auth/login'],
+            'loginUrl' => ['site/login'],
+        ],
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                ],
+            ],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

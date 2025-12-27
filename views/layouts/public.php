@@ -13,80 +13,87 @@ $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1, shrink-to-fit=no']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
 
+// Buscar informações da empresa se estivermos na área pública específica
+$empresa = null;
+$empresa_id = Yii::$app->request->get('empresa_id');
+if ($empresa_id) {
+    $empresa = \app\models\Empresa::findOne($empresa_id);
+}
+
 $this->registerCss("
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8fafc;
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    color: #1a202c;
 }
 
-.public-navbar {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 1rem 0;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+.company-header {
+    background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+    color: white;
+    padding: 2rem 0;
+    box-shadow: 0 4px 20px rgba(66, 153, 225, 0.3);
 }
 
-.public-navbar .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.company-header .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    text-align: center;
 }
 
-.public-brand {
-    font-size: 1.8rem;
+.company-name {
+    font-size: 2.5rem;
     font-weight: 700;
-    color: #4a5568;
-    text-decoration: none;
-    transition: color 0.3s ease;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.public-brand:hover {
-    color: #667eea;
+.company-tagline {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    font-weight: 300;
 }
 
 .public-nav {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    background: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-bottom: 1px solid #e2e8f0;
 }
 
-.public-nav a {
+.public-nav .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.nav-link {
     color: #4a5568;
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
     transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.public-nav a:hover {
-    color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
+.nav-link:hover {
+    background: #edf2f7;
+    color: #2d3748;
+    transform: translateY(-1px);
 }
 
-.public-nav .btn-login {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 0.6rem 1.8rem;
-    border-radius: 25px;
-    font-weight: 600;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-}
-
-.public-nav .btn-login:hover {
-    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+.nav-link.active {
+    background: #4299e1;
     color: white;
 }
 
@@ -94,43 +101,73 @@ body {
     max-width: 1200px;
     margin: 3rem auto;
     padding: 0 2rem;
+    min-height: 60vh;
 }
 
-.public-card {
+.content-card {
     background: white;
-    border-radius: 15px;
+    border-radius: 12px;
     padding: 3rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
 }
 
-.public-footer {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+.company-footer {
+    background: #2d3748;
+    color: #a0aec0;
     padding: 2rem 0;
     margin-top: 4rem;
-    color: #4a5568;
     text-align: center;
-    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
 }
 
-.public-footer a {
-    color: #667eea;
-    text-decoration: none;
+.company-footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
 }
 
-.public-footer a:hover {
-    text-decoration: underline;
+.company-contact {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {
-    .public-navbar .container {
-        flex-direction: column;
-        gap: 1rem;
+    .company-name {
+        font-size: 2rem;
     }
     
-    .public-nav {
+    .public-nav .container {
         flex-direction: column;
         gap: 0.5rem;
+    }
+    
+    .nav-link {
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .public-content {
+        margin: 1rem auto;
+        padding: 0 1rem;
+    }
+    
+    .content-card {
+        padding: 1.5rem;
+    }
+    
+    .company-contact {
+        flex-direction: column;
+        gap: 1rem;
     }
 }
 ");
@@ -145,30 +182,74 @@ body {
 <body>
 <?php $this->beginBody() ?>
 
-<nav class="public-navbar">
+<header class="company-header">
     <div class="container">
-        <a href="<?= Yii::$app->homeUrl ?>" class="public-brand">
-            <?= Yii::$app->name ?>
-        </a>
-        <ul class="public-nav">
-            <li><a href="<?= \yii\helpers\Url::to(['/site/index']) ?>">Início</a></li>
-            <li><a href="<?= \yii\helpers\Url::to(['/site/about']) ?>">Quem Somos</a></li>
-            <li><a href="<?= \yii\helpers\Url::to(['/site/contact']) ?>">Contato</a></li>
-            <li><a href="<?= \yii\helpers\Url::to(['/site/register']) ?>">Cadastro</a></li>
-            <li><a href="<?= \yii\helpers\Url::to(['/auth/auth/login']) ?>" class="btn-login">Acessar Sistema</a></li>
-        </ul>
+        <?php if ($empresa): ?>
+            <h1 class="company-name"><?= Html::encode($empresa->nome) ?></h1>
+            <p class="company-tagline">Agende seus serviços online</p>
+        <?php else: ?>
+            <h1 class="company-name">Área de Agendamentos</h1>
+            <p class="company-tagline">Encontre a empresa ideal para você</p>
+        <?php endif; ?>
+    </div>
+</header>
+
+<nav class="public-nav">
+    <div class="container">
+        <?php if ($empresa): ?>
+            <a href="<?= \yii\helpers\Url::to(['/cliente/area-publica', 'empresa_id' => $empresa->id]) ?>" class="nav-link">
+                🏠 Início
+            </a>
+            <a href="<?= \yii\helpers\Url::to(['/cliente/area-publica', 'empresa_id' => $empresa->id]) ?>#servicos" class="nav-link">
+                💼 Serviços
+            </a>
+            <a href="<?= \yii\helpers\Url::to(['/cliente/area-publica', 'empresa_id' => $empresa->id]) ?>#agendamento" class="nav-link">
+                📅 Agendar
+            </a>
+            <a href="<?= \yii\helpers\Url::to(['/cliente/area-publica', 'empresa_id' => $empresa->id]) ?>#contato" class="nav-link">
+                📧 Contato
+            </a>
+        <?php else: ?>
+            <a href="<?= \yii\helpers\Url::to(['/cliente/empresas']) ?>" class="nav-link">
+                🏠 Início
+            </a>
+            <a href="<?= \yii\helpers\Url::to(['/cliente/empresas']) ?>" class="nav-link">
+                🏢 Empresas
+            </a>
+        <?php endif; ?>
     </div>
 </nav>
 
-<div class="public-content">
-    <div class="public-card">
+<main class="public-content">
+    <div class="content-card">
         <?= $content ?>
     </div>
-</div>
+</main>
 
-<footer class="public-footer">
+<footer class="company-footer">
     <div class="container">
-        <p>&copy; <?= date('Y') ?> <?= Yii::$app->name ?>. Todos os direitos reservados.</p>
+        <?php if ($empresa): ?>
+            <div class="company-contact">
+                <?php if ($empresa->telefone): ?>
+                    <div class="contact-item">
+                        📞 <?= Html::encode($empresa->telefone) ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($empresa->email): ?>
+                    <div class="contact-item">
+                        ✉️ <?= Html::encode($empresa->email) ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($empresa->endereco): ?>
+                    <div class="contact-item">
+                        📍 <?= Html::encode($empresa->endereco) ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <p>&copy; <?= date('Y') ?> <?= Html::encode($empresa->nome) ?>. Todos os direitos reservados.</p>
+        <?php else: ?>
+            <p>&copy; <?= date('Y') ?> Sistema de Agendamentos. Todos os direitos reservados.</p>
+        <?php endif; ?>
     </div>
 </footer>
 

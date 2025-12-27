@@ -1,36 +1,64 @@
-# phpstorm project files
-.idea
+# IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
 
-# visual studio code project files
-.vscode
+# Runtime files (gerados automaticamente)
+/runtime/*
+!/runtime/.gitkeep
 
-# netbeans project files
-nbproject
+# Assets gerados automaticamente
+/web/assets/*
+!/web/assets/.gitignore
 
-# zend studio for eclipse project files
-.buildpath
-.project
-.settings
+# Output dos testes
+/tests/_output/*
+/tests/_support/_generated/*
 
-# windows thumbnail cache
-Thumbs.db
+# Dependências
+/vendor/
+node_modules/
+bower_components/
 
-# composer vendor dir
-/vendor
+# Logs e caches
+*.log
+/runtime/logs/*
+/runtime/cache/*
+/runtime/session/*
+/runtime/debug/*
 
-# composer itself is not needed
+# Configuração local
+/config/db-local.php
+/config/web-local.php
+/config/console-local.php
+/config/params-local.php
+
+
+
+# Ferramentas de desenvolvimento
 composer.phar
-
-# Mac DS_Store Files
-.DS_Store
-
-# phpunit itself is not needed
 phpunit.phar
-# local phpunit config
 /phpunit.xml
 
-tests/_output/*
-tests/_support/_generated
+# NetBeans
+nbproject/
 
-#vagrant folder
-/.vagrant
+# Eclipse
+.buildpath
+.project
+.settings/
+
+# Vagrant
+/.vagrant/
+/Vagrantfile.local
+
+# Docker
+/.env
+/docker-compose.override.yml
+
+# Apache/Nginx configs locais
+apache-alias.conf
+apache-control.conf
+
+

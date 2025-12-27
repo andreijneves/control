@@ -1,96 +1,151 @@
 <?php
 
-/** @var yii\web\View $this */
+use yii\bootstrap5\Html;
 
-use yii\helpers\Html;
-
-$this->title = 'Sistema de Controle';
-
-$this->registerCss("
-.hero-section {
-    text-align: center;
-    padding: 3rem 0;
-    margin-bottom: 3rem;
-}
-
-.hero-section h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #2d3748;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.hero-section p {
-    font-size: 1.3rem;
-    color: #4a5568;
-    margin-bottom: 2rem;
-}
-
-.feature-card {
-    padding: 2rem;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-    border-radius: 12px;
-    border: 2px solid rgba(102, 126, 234, 0.1);
-    transition: all 0.3s ease;
-    height: 100%;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
-    border-color: rgba(102, 126, 234, 0.3);
-}
-
-.feature-card h3 {
-    color: #667eea;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.feature-card p {
-    color: #4a5568;
-    line-height: 1.6;
-}
-
-.feature-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-");
+$this->title = 'Control - Gestão de Serviços';
 ?>
-<div class="site-index">
 
-    <div class="hero-section">
-        <h1>Gestão Inteligente</h1>
-        <p>Simplifique a administração de organizações, serviços e equipes</p>
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="display-4">🚀 Bem-vindo ao Control</h1>
+            <p class="lead">Sistema inteligente de agendamento de serviços</p>
+            <p class="description">
+                <strong>Revolucione sua empresa!</strong> Automatize agendamentos, reduza cancelamentos e 
+                aumente a satisfação dos seus clientes. Ganhe mais tempo para focar no que realmente importa: 
+                fazer seu negócio crescer com tecnologia de ponta.
+            </p>
+            
+            <div class="mt-4">
+                <?= Html::a('<span>🏢 Cadastrar Empresa</span>', ['/site/cadastro-empresa'], [
+                    'class' => 'btn btn-primary-modern btn-modern me-3 animate-pulse'
+                ]) ?>
+                <?= Html::a('<span>📋 Saiba Mais</span>', ['/site/sobre'], [
+                    'class' => 'btn btn-outline-modern btn-modern'
+                ]) ?>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="row g-4">
-        <div class="col-lg-4">
-            <div class="feature-card">
-                <div class="feature-icon">🏢</div>
-                <h3>Organizações</h3>
-                <p>Gerencie múltiplas organizações com informações completas, CNPJ, contatos e endereços em um único lugar.</p>
+<!-- Estatísticas -->
+<div class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <span class="stat-number">24/7</span>
+                    <span class="stat-label">Disponível</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Agendamentos</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <span class="stat-number">🔒</span>
+                    <span class="stat-label">Seguro</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-card">
+                    <span class="stat-number">⚡</span>
+                    <span class="stat-label">Rápido</span>
+                </div>
             </div>
         </div>
-        <div class="col-lg-4">
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold text-white">✨ Recursos Poderosos</h2>
+        <p class="lead text-white opacity-75">Tudo o que você precisa para gerenciar sua empresa</p>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
             <div class="feature-card">
-                <div class="feature-icon">⚙️</div>
-                <h3>Serviços</h3>
-                <p>Cadastre serviços com preços, duração e descrições detalhadas. Controle completo do portfólio de cada organização.</p>
+                <div class="feature-icon">🛠️</div>
+                <h5 class="card-title">Gerencie Serviços</h5>
+                <p class="card-text">
+                    Cadastre e organize todos os serviços da sua empresa com descrições detalhadas, 
+                    preços e durações personalizadas.
+                </p>
             </div>
         </div>
-        <div class="col-lg-4">
+        
+        <div class="col-lg-4 col-md-6 mb-4">
             <div class="feature-card">
                 <div class="feature-icon">👥</div>
-                <h3>Funcionários</h3>
-                <p>Cadastro automático de usuários para funcionários com controle de cargos, permissões e acessos individualizados.</p>
+                <h5 class="card-title">Controle de Funcionários</h5>
+                <p class="card-text">
+                    Gerencie funcionários e configure horários disponíveis, especialidades 
+                    e vincule aos serviços específicos.
+                </p>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h5 class="card-title">Agendamentos Inteligentes</h5>
+                <p class="card-text">
+                    Sistema avançado que evita conflitos, permite cancelamentos online 
+                    e envia notificações automáticas.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h5 class="card-title">Dashboard Completo</h5>
+                <p class="card-text">
+                    Acompanhe métricas em tempo real, receita, agendamentos 
+                    e performance da sua empresa em gráficos intuitivos.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h5 class="card-title">Comunicação Automatizada</h5>
+                <p class="card-text">
+                    Lembretes automáticos por email/SMS, confirmações de agendamento 
+                    e comunicação direta com clientes.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h5 class="card-title">Área Pública Personalizada</h5>
+                <p class="card-text">
+                    Cada empresa tem sua própria página de agendamentos com 
+                    design personalizado e domínio exclusivo.
+                </p>
             </div>
         </div>
     </div>
+</div>
 
+<!-- Call to Action Section -->
+<div class="container my-5">
+    <div class="text-center">
+        <h3 class="text-white mb-4">🎯 Pronto para Revolucionar seu Negócio?</h3>
+        <p class="text-white opacity-75 mb-4">
+            Junte-se a centenas de empresas que já transformaram sua operação com o Control
+        </p>
+        <?= Html::a('<span>🚀 Começar Agora - É Grátis!</span>', ['/site/cadastro-empresa'], [
+            'class' => 'btn btn-primary-modern btn-modern btn-lg animate-pulse'
+        ]) ?>
+    </div>
 </div>
