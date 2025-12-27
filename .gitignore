@@ -29,21 +29,12 @@ bower_components/
 /runtime/debug/*
 
 # Configuração local
-/config/db.php
 /config/db-local.php
 /config/web-local.php
 /config/console-local.php
 /config/params-local.php
 
-# Arquivos do sistema operacional
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Thumbs.db
-ehthumbs.db
-Desktop.ini
+
 
 # Ferramentas de desenvolvimento
 composer.phar
@@ -70,13 +61,4 @@ nbproject/
 apache-alias.conf
 apache-control.conf
 
-# Documentação temporária
-INDICE_COMPLETO.md
-LEIA-ME-PRIMEIRO.md
-MOVIMENTACAO_AREA_PUBLICA_CONCLUIDA.md
-PROBLEMA_RESOLVIDO_HORARIO_EMPRESA.html
-RESUMO_FINAL.txt
-SETUP_APACHE_ALIAS.md
-SISTEMA_COMPLETO.md
-SOLUCAO_CSRF.md
-TESTE_RAPIDO.md
+
