@@ -14,7 +14,7 @@ $config = [
     ],
     'components' => [
         'request' => [
-            'cookieValidationKey' => 'FGQaQFWbMid044GD0UI0dFie-LLHTozM',
+            'cookieValidationKey' => hash('sha256', __DIR__ . __FILE__),
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ],
